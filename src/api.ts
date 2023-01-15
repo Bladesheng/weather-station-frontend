@@ -1,3 +1,19 @@
+export type IReading = {
+  id: number;
+  createdAt: string | Date;
+
+  temperature_BMP: number;
+  temperature_DHT: number;
+  pressure_BMP: number;
+  humidity_DHT: number;
+
+  qualityId: number;
+  quality: {
+    id: number;
+    status: "string";
+  };
+};
+
 export async function fetchReadingsRange(start: Date, end: Date, status: string) {
   try {
     // DEV ONLY
@@ -14,7 +30,12 @@ export async function fetchReadingsRange(start: Date, end: Date, status: string)
       throw new Error("Network response was not OK");
     }
 
-    const body = await res.json();
+    const body: IReading[] = await res.json();
+
+    for (const reading of body) {
+      reading.createdAt = new Date(reading.createdAt); // convert string to date object for future use
+    }
+
     console.log(body);
     return body;
   } catch (error) {

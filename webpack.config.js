@@ -58,4 +58,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
+  experiments: {
+    topLevelAwait: true,
+  },
 };
