@@ -8,6 +8,7 @@ module.exports = {
   entry: "./src/index.tsx",
   devServer: {
     static: "./dist",
+    port: 8000,
   },
   plugins: [
     new HtmlWebpackPlugin({
