@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import ReadingsChart from "./ReadingsChart";
+import ChartTempHum from "./ChartTempHum";
+import ChartPress from "./ChartPress";
 import Footer from "./Footer";
 
 import { fetchReadingsRange } from "../api";
@@ -21,7 +22,8 @@ export default function App() {
     <div className="app">
       <p>OMG, React, hi!!!</p>
 
-      <ReadingsChart readings={readings} />
+      <ChartTempHum readings={readings} />
+      <ChartPress readings={readings} />
 
       <Footer />
     </div>

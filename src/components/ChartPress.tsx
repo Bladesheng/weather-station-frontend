@@ -59,28 +59,10 @@ type IProps = {
 };
 
 export default function ReadingsChart(props: IProps) {
-  const readings_temperature_BMP = props.readings.map((reading) => {
-    return {
-      x: reading.createdAt,
-      y: reading.temperature_BMP,
-    };
-  });
-  const readings_temperature_DHT = props.readings.map((reading) => {
-    return {
-      x: reading.createdAt,
-      y: reading.temperature_DHT,
-    };
-  });
   const readings_pressure_BMP = props.readings.map((reading) => {
     return {
       x: reading.createdAt,
-      y: reading.pressure_BMP,
-    };
-  });
-  const readings_humidity_DHT = props.readings.map((reading) => {
-    return {
-      x: reading.createdAt,
-      y: reading.humidity_DHT,
+      y: reading.pressure_BMP / 100, // unit conversion from Pa to hPa
     };
   });
 
@@ -88,32 +70,13 @@ export default function ReadingsChart(props: IProps) {
     labels: [],
     datasets: [
       {
-        label: "Teplota (BMP)",
-        data: readings_temperature_BMP,
-        backgroundColor: "lightblue",
-        borderColor: "lightblue",
-      },
-      {
-        label: "Teplota (DHT)",
-        data: readings_temperature_DHT,
-        backgroundColor: "blue",
-        borderColor: "blue",
-      },
-      {
         label: "Tlak",
         data: readings_pressure_BMP,
-        backgroundColor: "red",
+        backgroundColor: "purple",
         borderColor: "purple",
-        hidden: true,
-      },
-      {
-        label: "Vlhkost",
-        data: readings_humidity_DHT,
-        backgroundColor: "cyan",
-        borderColor: "blue",
-        hidden: true,
       },
     ],
   };
+
   return <Line options={options} data={data} />;
 }
