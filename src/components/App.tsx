@@ -7,7 +7,7 @@ import { fetchReadingsRange } from "../api";
 
 const startDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000); // 24 hours ago in miliseconds
 const endDate = new Date(); // up to now
-const status = "dev";
+const status = "normal";
 
 const initialReadings = await fetchReadingsRange(startDate, endDate, status);
 

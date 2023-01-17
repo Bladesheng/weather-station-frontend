@@ -17,10 +17,14 @@ export type IReading = {
 export async function fetchReadingsRange(start: Date, end: Date, status: string) {
   try {
     // DEV ONLY
-    start = new Date("2022-11-27T12:30");
-    end = new Date("2022-11-28T12:30");
+    //start = new Date("2022-11-27T12:30");
+    //end = new Date("2022-11-28T12:30");
+    //status = "dev";
+    //const domain = "localhost:8080";
 
-    const url = `http://localhost:8080/api/readings/range?start=${start.toISOString()}&end=${end.toISOString()}&status=${status}`;
+    const domain = "weather-station-backend.fly.dev";
+
+    const url = `https://${domain}/api/readings/range?start=${start.toISOString()}&end=${end.toISOString()}&status=${status}`;
 
     const res = await fetch(url, {
       method: "GET",
