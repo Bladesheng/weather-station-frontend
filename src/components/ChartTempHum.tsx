@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { IReading } from "../api";
+
+import { Storage } from "../Storage";
 
 import {
   Chart as ChartJS,
@@ -14,6 +16,9 @@ import {
   LineElement,
   TimeScale,
   TimeSeriesScale,
+  ChartOptions,
+  LegendItem,
+  ChartEvent,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import { Line } from "react-chartjs-2";
@@ -31,41 +36,18 @@ ChartJS.register(
   TimeSeriesScale
 );
 
-const gridColor = "rgb(50, 50, 50)";
-
-const options = {
-  responsive: true,
-  scales: {
-    x: {
-      type: "time" as const,
-      time: {
-        displayFormats: { hour: "HH:mm" },
-      },
-
-      grid: {
-        color: gridColor,
-      },
-    },
-    y1: {
-      grid: {
-        color: gridColor,
-      },
-      position: "left" as const,
-    },
-    y2: {
-      grid: {
-        drawOnChartArea: false,
-      },
-      position: "right" as const,
-    },
-  },
-};
-
 type IProps = {
   readings: IReading[];
 };
 
 export default function ReadingsChart(props: IProps) {
+  const [datasetHidden, setDatasetHidden] = useState(Storage.datasetHidden);
+
+  useEffect(() => {
+    // save visibility preferences in local storage
+    Storage.datasetHidden = datasetHidden;
+  }, [datasetHidden]);
+
   const readings_temperature_avg = props.readings.map((reading) => {
     return {
       x: reading.createdAt,
@@ -92,6 +74,50 @@ export default function ReadingsChart(props: IProps) {
     };
   });
 
+  const gridColor = "rgb(50, 50, 50)";
+
+  const options: ChartOptions<"line"> = {
+    responsive: true,
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          displayFormats: { hour: "HH:mm" },
+        },
+
+        grid: {
+          color: gridColor,
+        },
+      },
+      y1: {
+        grid: {
+          color: gridColor,
+        },
+        position: "left",
+      },
+      y2: {
+        grid: {
+          drawOnChartArea: false,
+        },
+        position: "right",
+      },
+    },
+
+    plugins: {
+      legend: {
+        onClick: (e: ChartEvent, legendItem: LegendItem) => {
+          // toggle visibility of the dataset on click and save the state
+          const clickedDataset = legendItem.text as keyof typeof datasetHidden;
+          const datasetHiddenCopy = structuredClone(datasetHidden);
+
+          datasetHiddenCopy[clickedDataset] = !datasetHidden[clickedDataset];
+
+          setDatasetHidden(datasetHiddenCopy);
+        },
+      },
+    },
+  };
+
   const data = {
     labels: [],
     datasets: [
@@ -100,6 +126,7 @@ export default function ReadingsChart(props: IProps) {
         data: readings_temperature_avg,
         backgroundColor: "brown",
         borderColor: "brown",
+        hidden: datasetHidden["Teplota (Průměr)"],
         yAxisID: "y1",
       },
       {
@@ -107,7 +134,7 @@ export default function ReadingsChart(props: IProps) {
         data: readings_temperature_BMP,
         backgroundColor: "red",
         borderColor: "red",
-        hidden: true,
+        hidden: datasetHidden["Teplota (BMP)"],
         yAxisID: "y1",
       },
       {
@@ -115,14 +142,15 @@ export default function ReadingsChart(props: IProps) {
         data: readings_temperature_DHT,
         backgroundColor: "orange",
         borderColor: "orange",
-        hidden: true,
+        hidden: datasetHidden["Teplota (DHT)"],
         yAxisID: "y1",
       },
       {
-        label: "Vlhkost",
+        label: "Vlhkost (DHT)",
         data: readings_humidity_DHT,
         backgroundColor: "blue",
         borderColor: "blue",
+        hidden: datasetHidden["Vlhkost (DHT)"],
         yAxisID: "y2",
       },
     ],

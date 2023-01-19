@@ -14,6 +14,7 @@ import {
   LineElement,
   TimeScale,
   TimeSeriesScale,
+  ChartOptions,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import { Line } from "react-chartjs-2";
@@ -33,11 +34,11 @@ ChartJS.register(
 
 const gridColor = "rgb(50, 50, 50)";
 
-const options = {
+const options: ChartOptions<"line"> = {
   responsive: true,
   scales: {
     x: {
-      type: "time" as const,
+      type: "time",
       time: {
         displayFormats: { hour: "HH:mm" },
       },

@@ -1,9 +1,13 @@
+import { Storage } from "../Storage";
+
 import React, { useState } from "react";
 import ChartTempHum from "./ChartTempHum";
 import ChartPress from "./ChartPress";
 import Footer from "./Footer";
 
 import { fetchReadingsRange } from "../api";
+
+Storage.init();
 
 const startDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000); // 24 hours ago in miliseconds
 const endDate = new Date(); // up to now
