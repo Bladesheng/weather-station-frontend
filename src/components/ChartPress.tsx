@@ -3,6 +3,7 @@ import React from "react";
 import { IReading } from "@api/api";
 
 import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
+import { CursorPositioner } from "@utils/chart-positioner-cursor";
 
 import {
   Chart as ChartJS,
@@ -49,6 +50,8 @@ export default function ReadingsChart(props: IProps) {
     };
   });
 
+  Tooltip.positioners.cursor = CursorPositioner;
+
   // extend options
   const options: ChartOptions<"line"> & { plugins: { crosshair: CrosshairOptions } } = {
     responsive: true,
@@ -70,9 +73,18 @@ export default function ReadingsChart(props: IProps) {
       },
     },
 
+    interaction: {
+      intersect: false, // always show tooltip
+      mode: "index", // show all datasets on tooltip
+    },
+
     plugins: {
       crosshair: {
         horizontal: false,
+      },
+
+      tooltip: {
+        position: "cursor",
       },
     },
   };

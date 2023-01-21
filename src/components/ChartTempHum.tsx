@@ -4,6 +4,7 @@ import { IReading } from "@api/api";
 
 import { Storage } from "@utils/storage";
 import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
+import { CursorPositioner } from "@utils/chart-positioner-cursor";
 
 import {
   Chart as ChartJS,
@@ -78,6 +79,8 @@ export default function ReadingsChart(props: IProps) {
 
   const gridColor = "rgb(50, 50, 50)";
 
+  Tooltip.positioners.cursor = CursorPositioner;
+
   // extend options
   const options: ChartOptions<"line"> & { plugins: { crosshair: CrosshairOptions } } = {
     responsive: true,
@@ -106,6 +109,11 @@ export default function ReadingsChart(props: IProps) {
       },
     },
 
+    interaction: {
+      intersect: false, // always show tooltip
+      mode: "index", // show all datasets on tooltip
+    },
+
     plugins: {
       crosshair: {
         horizontal: false,
@@ -121,6 +129,10 @@ export default function ReadingsChart(props: IProps) {
 
           setDatasetHidden(datasetHiddenCopy);
         },
+      },
+
+      tooltip: {
+        position: "cursor",
       },
     },
   };
