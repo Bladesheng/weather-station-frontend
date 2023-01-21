@@ -1,8 +1,8 @@
 import React from "react";
 
-import { IReading } from "../api";
+import { IReading } from "@api/api";
 
-import { ChartPluginCrosshair, CrosshairOptions } from "../utils/chart-plugin-crosshair";
+import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
 
 import {
   Chart as ChartJS,

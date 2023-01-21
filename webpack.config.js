@@ -1,22 +1,24 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = {
   // mode: "development",
   // devtool: "source-map",
-  entry: "./src/index.tsx",
+  entry: "./src/pages/index.tsx",
   devServer: {
     static: "./dist",
     port: 8000,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
+      template: "./src/pages/index.html",
     }),
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".js", "..."],
+    plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })],
   },
   module: {
     rules: [

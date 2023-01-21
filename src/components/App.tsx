@@ -1,11 +1,12 @@
-import { Storage } from "../Storage";
+import { Storage } from "@utils/storage";
 
 import React, { useState } from "react";
-import ChartTempHum from "./ChartTempHum";
-import ChartPress from "./ChartPress";
-import Footer from "./Footer";
 
-import { fetchReadingsRange } from "../api";
+import ChartTempHum from "@components/ChartTempHum";
+import ChartPress from "@components/ChartPress";
+import Footer from "@components/Footer";
+
+import { fetchReadingsRange } from "@api/api";
 
 Storage.init();
 

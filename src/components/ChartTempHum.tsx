@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { IReading } from "../api";
+import { IReading } from "@api/api";
 
-import { Storage } from "../Storage";
-
-import { ChartPluginCrosshair, CrosshairOptions } from "../utils/chart-plugin-crosshair";
+import { Storage } from "@utils/storage";
+import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
 
 import {
   Chart as ChartJS,
