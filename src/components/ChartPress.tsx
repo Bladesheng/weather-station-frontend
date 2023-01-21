@@ -4,6 +4,7 @@ import { IReading } from "@api/api";
 
 import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
 import { CursorPositioner } from "@utils/chart-positioner-cursor";
+import { chartColors } from "@utils/colors";
 
 import {
   Chart as ChartJS,
@@ -36,8 +37,6 @@ ChartJS.register(
   ChartPluginCrosshair
 );
 
-const gridColor = "rgb(50, 50, 50)";
-
 type IProps = {
   readings: IReading[];
 };
@@ -63,12 +62,12 @@ export default function ReadingsChart(props: IProps) {
         },
 
         grid: {
-          color: gridColor,
+          color: chartColors.grid,
         },
       },
       y: {
         grid: {
-          color: gridColor,
+          color: chartColors.grid,
         },
       },
     },

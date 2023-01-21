@@ -5,6 +5,7 @@ import { IReading } from "@api/api";
 import { Storage } from "@utils/storage";
 import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
 import { CursorPositioner } from "@utils/chart-positioner-cursor";
+import { chartColors } from "@utils/colors";
 
 import {
   Chart as ChartJS,
@@ -77,8 +78,6 @@ export default function ReadingsChart(props: IProps) {
     };
   });
 
-  const gridColor = "rgb(50, 50, 50)";
-
   Tooltip.positioners.cursor = CursorPositioner;
 
   // extend options
@@ -92,12 +91,12 @@ export default function ReadingsChart(props: IProps) {
         },
 
         grid: {
-          color: gridColor,
+          color: chartColors.grid,
         },
       },
       y1: {
         grid: {
-          color: gridColor,
+          color: chartColors.grid,
         },
         position: "left",
       },
