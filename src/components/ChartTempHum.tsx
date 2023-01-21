@@ -4,6 +4,8 @@ import { IReading } from "../api";
 
 import { Storage } from "../Storage";
 
+import { ChartPluginCrosshair, CrosshairOptions } from "../utils/chart-plugin-crosshair";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -33,7 +35,8 @@ ChartJS.register(
   PointElement,
   LineElement,
   TimeScale,
-  TimeSeriesScale
+  TimeSeriesScale,
+  ChartPluginCrosshair
 );
 
 type IProps = {
@@ -76,7 +79,8 @@ export default function ReadingsChart(props: IProps) {
 
   const gridColor = "rgb(50, 50, 50)";
 
-  const options: ChartOptions<"line"> = {
+  // extend options
+  const options: ChartOptions<"line"> & { plugins: { crosshair: CrosshairOptions } } = {
     responsive: true,
     scales: {
       x: {
@@ -104,6 +108,10 @@ export default function ReadingsChart(props: IProps) {
     },
 
     plugins: {
+      crosshair: {
+        horizontal: false,
+      },
+
       legend: {
         onClick: (e: ChartEvent, legendItem: LegendItem) => {
           // toggle visibility of the dataset on click and save the state

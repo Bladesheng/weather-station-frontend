@@ -2,6 +2,8 @@ import React from "react";
 
 import { IReading } from "../api";
 
+import { ChartPluginCrosshair, CrosshairOptions } from "../utils/chart-plugin-crosshair";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -29,31 +31,11 @@ ChartJS.register(
   PointElement,
   LineElement,
   TimeScale,
-  TimeSeriesScale
+  TimeSeriesScale,
+  ChartPluginCrosshair
 );
 
 const gridColor = "rgb(50, 50, 50)";
-
-const options: ChartOptions<"line"> = {
-  responsive: true,
-  scales: {
-    x: {
-      type: "time",
-      time: {
-        displayFormats: { hour: "HH:mm" },
-      },
-
-      grid: {
-        color: gridColor,
-      },
-    },
-    y: {
-      grid: {
-        color: gridColor,
-      },
-    },
-  },
-};
 
 type IProps = {
   readings: IReading[];
@@ -66,6 +48,34 @@ export default function ReadingsChart(props: IProps) {
       y: reading.pressure_BMP / 100, // unit conversion from Pa to hPa
     };
   });
+
+  // extend options
+  const options: ChartOptions<"line"> & { plugins: { crosshair: CrosshairOptions } } = {
+    responsive: true,
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          displayFormats: { hour: "HH:mm" },
+        },
+
+        grid: {
+          color: gridColor,
+        },
+      },
+      y: {
+        grid: {
+          color: gridColor,
+        },
+      },
+    },
+
+    plugins: {
+      crosshair: {
+        horizontal: false,
+      },
+    },
+  };
 
   const data = {
     labels: [],
