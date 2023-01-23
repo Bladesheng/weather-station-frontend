@@ -34,7 +34,7 @@ export const ChartPluginCrosshair = {
 
   defaults,
 
-  afterInit: (chart: Chart) => {
+  beforeInit: (chart: Chart) => {
     chart.crosshair = {
       x: 0,
       y: 0,
@@ -50,6 +50,19 @@ export const ChartPluginCrosshair = {
   },
 
   afterDraw: (chart: Chart, args: any, opts: typeof defaults) => {
+    if (chart.crosshair === undefined) {
+      // If the chart component is placed inside another element (or nested too deep, idk),
+      // then afterDraw hook is called once before afterInit for reasons unknown.
+      // That means crosshair x and y will be undefined in this block which results into error.
+      // Happens in Chrome, not in Firefox.
+      // Solved by using beforeInit instead of afterInit.
+      // Leaving this here anyway just in case
+      chart.crosshair = {
+        x: 0,
+        y: 0,
+      };
+    }
+
     const { ctx } = chart;
     const { top, bottom, left, right } = chart.chartArea;
     const { x, y, draw } = chart.crosshair;

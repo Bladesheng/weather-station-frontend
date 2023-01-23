@@ -82,10 +82,22 @@ ol {
 
 main {
   flex: 1 1 auto;
-  padding: 4vw;
+  padding: 1vw;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+
+  .charts {
+    display: grid;
+
+    width: 47vw; // fix this
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+
+    canvas {
+      flex: 1 1 auto;
+    }
+  }
 }
 
 footer {

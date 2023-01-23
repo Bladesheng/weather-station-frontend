@@ -2,6 +2,7 @@ import { Storage } from "@utils/storage";
 
 import React, { useState } from "react";
 
+import Dashboard from "@components/Dashboard";
 import ChartTempHum from "@components/ChartTempHum";
 import ChartPress from "@components/ChartPress";
 import Footer from "@components/Footer";
@@ -25,10 +26,13 @@ export default function App() {
 
   return (
     <div className="app">
-      <p>OMG, React, hi!!!</p>
-
-      <ChartTempHum readings={readings} />
-      <ChartPress readings={readings} />
+      <main>
+        <Dashboard readings={readings} />
+        <div className="charts">
+          <ChartTempHum readings={readings} />
+          <ChartPress readings={readings} />
+        </div>
+      </main>
 
       <Footer />
     </div>
