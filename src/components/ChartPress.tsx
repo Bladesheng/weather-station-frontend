@@ -2,6 +2,7 @@ import React from "react";
 
 import { IReading } from "@api/api";
 
+import { labelCb, titleCb } from "@utils/chart-tooltip-callbacks";
 import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
 import { CursorPositioner } from "@utils/chart-positioner-cursor";
 import { chartColors } from "@utils/colors";
@@ -84,6 +85,10 @@ export default function ReadingsChart(props: IProps) {
 
       tooltip: {
         position: "cursor",
+        callbacks: {
+          label: labelCb,
+          title: titleCb,
+        },
       },
     },
   };

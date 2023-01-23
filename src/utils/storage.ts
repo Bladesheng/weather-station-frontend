@@ -1,10 +1,10 @@
 export const Storage = (() => {
   // default values
   let datasetHidden = {
-    "Teplota (Průměr)": false,
-    "Teplota (BMP)": true,
-    "Teplota (DHT)": true,
-    "Vlhkost (DHT)": false,
+    Teplota: false,
+    "Teplota BMP": true,
+    "Teplota DHT": true,
+    Vlhkost: false,
   };
 
   // save everything to local storage

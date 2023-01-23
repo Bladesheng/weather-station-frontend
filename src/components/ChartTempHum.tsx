@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { IReading } from "@api/api";
 
 import { Storage } from "@utils/storage";
+import { labelCb, titleCb } from "@utils/chart-tooltip-callbacks";
 import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
 import { CursorPositioner } from "@utils/chart-positioner-cursor";
 import { chartColors } from "@utils/colors";
@@ -132,6 +133,10 @@ export default function ReadingsChart(props: IProps) {
 
       tooltip: {
         position: "cursor",
+        callbacks: {
+          label: labelCb,
+          title: titleCb,
+        },
       },
     },
   };
@@ -140,35 +145,35 @@ export default function ReadingsChart(props: IProps) {
     labels: [],
     datasets: [
       {
-        label: "Teplota (Průměr)",
+        label: "Teplota",
         data: readings_temperature_avg,
         backgroundColor: "brown",
         borderColor: "brown",
-        hidden: datasetHidden["Teplota (Průměr)"],
+        hidden: datasetHidden["Teplota"],
         yAxisID: "y1",
       },
       {
-        label: "Teplota (BMP)",
+        label: "Teplota BMP",
         data: readings_temperature_BMP,
         backgroundColor: "red",
         borderColor: "red",
-        hidden: datasetHidden["Teplota (BMP)"],
+        hidden: datasetHidden["Teplota BMP"],
         yAxisID: "y1",
       },
       {
-        label: "Teplota (DHT)",
+        label: "Teplota DHT",
         data: readings_temperature_DHT,
         backgroundColor: "orange",
         borderColor: "orange",
-        hidden: datasetHidden["Teplota (DHT)"],
+        hidden: datasetHidden["Teplota DHT"],
         yAxisID: "y1",
       },
       {
-        label: "Vlhkost (DHT)",
+        label: "Vlhkost",
         data: readings_humidity_DHT,
         backgroundColor: "blue",
         borderColor: "blue",
-        hidden: datasetHidden["Vlhkost (DHT)"],
+        hidden: datasetHidden["Vlhkost"],
         yAxisID: "y2",
       },
     ],
