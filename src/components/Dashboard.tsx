@@ -21,6 +21,17 @@ export default function Dashboard(props: IProps) {
   const latestDate = props.readings[0].createdAt as Date;
   const { hours, minutes, seconds, dayOfMonth, month, year } = padDate(latestDate);
 
+  // min and max temperature (average) values in the past 24h
+  const { min, max } = props.readings.reduce(
+    (minMax, reading) => {
+      return {
+        min: Math.min(minMax.min, (reading.temperature_BMP + reading.temperature_DHT) / 2),
+        max: Math.max(minMax.max, (reading.temperature_BMP + reading.temperature_DHT) / 2),
+      };
+    },
+    { min: Infinity, max: -Infinity }
+  );
+
   return (
     <div className="dashboard">
       <p>Aktuální teplota</p>
@@ -32,6 +43,11 @@ export default function Dashboard(props: IProps) {
       <p>Poslední aktualizace</p>
       <p>
         {hours}:{minutes} ({dayOfMonth}.{month}.{year})
+      </p>
+
+      <p>Min / max teplota (24 h)</p>
+      <p>
+        {round(min, 1)} / {round(max, 1)} ˚C
       </p>
     </div>
   );
