@@ -70,6 +70,10 @@ export default function ReadingsChart(props: IProps) {
         grid: {
           color: chartColors.grid,
         },
+        title: {
+          display: true,
+          text: "Tlak [hPa]",
+        },
       },
     },
 

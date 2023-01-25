@@ -100,12 +100,20 @@ export default function ReadingsChart(props: IProps) {
           color: chartColors.grid,
         },
         position: "left",
+        title: {
+          display: true,
+          text: "Teplota [˚C]",
+        },
       },
       y2: {
         grid: {
           drawOnChartArea: false,
         },
         position: "right",
+        title: {
+          display: true,
+          text: "Relativní vlhkost [%]",
+        },
       },
     },
 
