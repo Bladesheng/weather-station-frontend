@@ -1,5 +1,7 @@
 import { TooltipItem } from "chart.js";
 
+import { padDate } from "@utils/formatDate";
+
 export function labelCb(context: TooltipItem<"line">) {
   const datasetName = context.dataset.label;
 
@@ -35,18 +37,10 @@ export function labelCb(context: TooltipItem<"line">) {
   return label;
 }
 
-function padWithZeroes(originalNumber: number) {
-  return String(originalNumber).padStart(2, "0");
-}
-
 export function titleCb(datasets: TooltipItem<"line">[]) {
   const date = new Date(datasets[0].parsed.x);
 
-  const hours = padWithZeroes(date.getHours());
-  const minutes = padWithZeroes(date.getMinutes());
-  const dayOfMonth = padWithZeroes(date.getDate());
-  const month = padWithZeroes(date.getMonth() + 1);
-  const year = date.getFullYear();
+  const { hours, minutes, seconds, dayOfMonth, month, year } = padDate(date);
 
   return `${hours}:${minutes}    ${dayOfMonth}.${month}.${year}`;
 }

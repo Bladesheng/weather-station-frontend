@@ -2,6 +2,8 @@ import React from "react";
 
 import { IReading } from "@api/api";
 
+import { padDate } from "@utils/formatDate";
+
 type IProps = {
   readings: IReading[];
 };
@@ -15,7 +17,9 @@ function round(originalNumber: number, decimalPlaces: number) {
 export default function Dashboard(props: IProps) {
   const { temperature_BMP, temperature_DHT, humidity_DHT } = props.readings[0];
   const temperature_avg = (temperature_BMP + temperature_DHT) / 2;
-  const latestDate = props.readings[0].createdAt;
+
+  const latestDate = props.readings[0].createdAt as Date;
+  const { hours, minutes, seconds, dayOfMonth, month, year } = padDate(latestDate);
 
   return (
     <div className="dashboard">
@@ -26,7 +30,9 @@ export default function Dashboard(props: IProps) {
       <p>{round(humidity_DHT, 0)} %</p>
 
       <p>Poslední aktualizace</p>
-      <p>{latestDate.toLocaleString()}</p>
+      <p>
+        {hours}:{minutes} ({dayOfMonth}.{month}.{year})
+      </p>
     </div>
   );
 }

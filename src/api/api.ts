@@ -40,7 +40,7 @@ export async function fetchReadingsRange(start: Date, end: Date, status: string)
       reading.createdAt = new Date(reading.createdAt); // convert string to date object for future use
     }
 
-    console.log(body, "");
+    console.log(body);
     return body;
   } catch (error) {
     console.error("There has been error with fetch request: ", error);
