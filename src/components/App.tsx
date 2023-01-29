@@ -42,6 +42,7 @@ export default function App() {
       };
 
       events.onerror = (error) => {
+        setListening(false);
         console.error("EventSource failed:", error);
       };
 
