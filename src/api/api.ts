@@ -1,6 +1,6 @@
 export type IReading = {
   id: number;
-  createdAt: string | Date;
+  createdAt: Date;
 
   temperature_BMP: number;
   temperature_DHT: number;
@@ -34,14 +34,14 @@ export async function fetchReadingsRange(start: Date, end: Date, status: string)
       throw new Error("Network response was not OK");
     }
 
-    const body: IReading[] = await res.json();
+    const body = await res.json();
 
     for (const reading of body) {
-      reading.createdAt = new Date(reading.createdAt); // convert string to date object for future use
+      reading.createdAt = new Date(reading.createdAt); // convert string (because json) to date object
     }
 
     console.log(body);
-    return body;
+    return body as IReading[];
   } catch (error) {
     console.error("There has been error with fetch request: ", error);
   }

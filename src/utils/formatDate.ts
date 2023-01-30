@@ -1,4 +1,4 @@
-function padWithZeroes(originalNumber: number) {
+export function padWithZeroes(originalNumber: number) {
   return String(originalNumber).padStart(2, "0");
 }
 

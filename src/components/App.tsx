@@ -7,7 +7,7 @@ import ChartTempHum from "@components/ChartTempHum";
 import ChartPress from "@components/ChartPress";
 import Footer from "@components/Footer";
 
-import { fetchReadingsRange } from "@api/api";
+import { fetchReadingsRange, IReading } from "@api/api";
 
 Storage.init();
 
@@ -33,8 +33,8 @@ export default function App() {
 
       // update current readings with newly received readings
       events.onmessage = (event) => {
-        const newReading = JSON.parse(event.data);
-        newReading.createdAt = new Date(newReading.createdAt); // convert string to date object!
+        const newReading: IReading = JSON.parse(event.data);
+        newReading.createdAt = new Date(newReading.createdAt); // convert string (because json) to date object
         console.log("new reading: ", newReading);
 
         // update readings
