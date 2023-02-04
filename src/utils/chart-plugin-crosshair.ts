@@ -24,8 +24,8 @@ export type CrosshairOptions = {
 const defaults = {
   horizontal: true,
   vertical: true,
-  color: "red",
-  dash: [5],
+  color: "rgb(96,125,139)",
+  dash: [4, 2],
   width: 1,
 };
 
@@ -75,6 +75,8 @@ export const ChartPluginCrosshair = {
 
     ctx.save();
     ctx.beginPath();
+
+    ctx.translate(0.5, 0.5); // fix some weird antialiasing by moving the pixels a bit
 
     if (opts.vertical) {
       ctx.moveTo(x, bottom);
