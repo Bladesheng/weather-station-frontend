@@ -10,16 +10,13 @@ import { chartColors } from "@utils/colors";
 
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
+  LineController,
   LineElement,
+  PointElement,
   TimeScale,
-  TimeSeriesScale,
+  LinearScale,
+  Legend,
+  Tooltip,
   ChartOptions,
   LegendItem,
   ChartEvent,
@@ -28,17 +25,17 @@ import "chartjs-adapter-date-fns";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
+  // line chart
+  LineController,
   LineElement,
-  TimeScale,
-  TimeSeriesScale,
-  ChartPluginCrosshair
+  PointElement,
+
+  TimeScale, // x scale - point are not spread equidistantly
+  LinearScale, // y scale
+
+  ChartPluginCrosshair,
+  Legend,
+  Tooltip
 );
 
 type IProps = {
