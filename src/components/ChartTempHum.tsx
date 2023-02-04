@@ -83,6 +83,7 @@ export default function ReadingsChart(props: IProps) {
 
   // extend options
   const options: ChartOptions<"line"> & { plugins: { crosshair: CrosshairOptions } } = {
+    animation: false,
     responsive: true,
     scales: {
       x: {
@@ -162,34 +163,58 @@ export default function ReadingsChart(props: IProps) {
       {
         label: "Teplota",
         data: readings_temperature_avg,
+        yAxisID: "y1",
+        hidden: datasetHidden["Teplota"],
+
         backgroundColor: "brown",
         borderColor: "brown",
-        hidden: datasetHidden["Teplota"],
-        yAxisID: "y1",
+
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "brown",
+        pointHoverBorderColor: "brown",
       },
       {
         label: "Teplota BMP",
         data: readings_temperature_BMP,
+        yAxisID: "y1",
+        hidden: datasetHidden["Teplota BMP"],
+
         backgroundColor: "red",
         borderColor: "red",
-        hidden: datasetHidden["Teplota BMP"],
-        yAxisID: "y1",
+
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "red",
+        pointHoverBorderColor: "red",
       },
       {
         label: "Teplota DHT",
         data: readings_temperature_DHT,
+        yAxisID: "y1",
+        hidden: datasetHidden["Teplota DHT"],
+
         backgroundColor: "orange",
         borderColor: "orange",
-        hidden: datasetHidden["Teplota DHT"],
-        yAxisID: "y1",
+
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "orange",
+        pointHoverBorderColor: "orange",
       },
       {
         label: "Vlhkost",
         data: readings_humidity_DHT,
+        yAxisID: "y2",
+        hidden: datasetHidden["Vlhkost"],
+
         backgroundColor: "blue",
         borderColor: "blue",
-        hidden: datasetHidden["Vlhkost"],
-        yAxisID: "y2",
+
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "blue",
+        pointHoverBorderColor: "blue",
       },
     ],
   };

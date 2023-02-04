@@ -54,6 +54,7 @@ export default function ReadingsChart(props: IProps) {
 
   // extend options
   const options: ChartOptions<"line"> & { plugins: { crosshair: CrosshairOptions } } = {
+    animation: false,
     responsive: true,
     scales: {
       x: {
@@ -112,8 +113,14 @@ export default function ReadingsChart(props: IProps) {
       {
         label: "Tlak",
         data: readings_pressure_BMP,
+
         backgroundColor: "purple",
         borderColor: "purple",
+
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "purple",
+        pointHoverBorderColor: "purple",
       },
     ],
   };
