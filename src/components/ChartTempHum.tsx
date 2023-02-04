@@ -137,6 +137,13 @@ export default function ReadingsChart(props: IProps) {
 
           setDatasetHidden(datasetHiddenCopy);
         },
+
+        onHover: (event: any) => {
+          event.native.target.style.cursor = "pointer";
+        },
+        onLeave: (event: any) => {
+          event.native.target.style.cursor = "default";
+        },
       },
 
       tooltip: {
