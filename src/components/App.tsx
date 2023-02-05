@@ -1,6 +1,6 @@
 import { Storage } from "@utils/storage";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Dashboard from "@components/Dashboard";
 import ChartTempHum from "@components/ChartTempHum";
@@ -23,6 +23,11 @@ export default function App() {
   }
 
   const [readings, setReadings] = useState(initialReadings);
+  const readingsRef = useRef<IReading[]>(readings);
+  useEffect(() => {
+    readingsRef.current = readings; // make sure the ref is always up to date
+  }, [readings]);
+
   const [listening, setListening] = useState(false);
 
   useEffect(() => {
@@ -37,8 +42,15 @@ export default function App() {
         newReading.createdAt = new Date(newReading.createdAt); // convert string (because json) to date object
         console.log("new reading: ", newReading);
 
+        // ref is needed because this whole callback doesn't get updated when state changes
+        // which means this callback can't acces updated state without using ref
+        const readingsCopy = [...readingsRef.current];
+
+        // remove the last reading to not stretch out the chart too much
+        readingsCopy.pop();
+
         // update readings
-        setReadings([newReading, ...readings]);
+        setReadings([newReading, ...readingsCopy]);
       };
 
       events.onerror = (error) => {
