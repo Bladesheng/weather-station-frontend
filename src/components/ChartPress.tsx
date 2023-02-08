@@ -61,12 +61,12 @@ export default function ReadingsChart(props: IProps) {
         },
 
         grid: {
-          color: chartColors.grid,
+          color: chartColors.greyBorder,
         },
       },
       y: {
         grid: {
-          color: chartColors.grid,
+          color: chartColors.greyBorder,
         },
         title: {
           display: true,
@@ -111,13 +111,13 @@ export default function ReadingsChart(props: IProps) {
         label: "Tlak",
         data: readings_pressure_BMP,
 
-        backgroundColor: "purple",
-        borderColor: "purple",
+        backgroundColor: chartColors.linePurple,
+        borderColor: chartColors.linePurple,
 
         pointRadius: 2,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: "purple",
-        pointHoverBorderColor: "purple",
+        pointHoverBackgroundColor: chartColors.linePurple,
+        pointHoverBorderColor: chartColors.linePurple,
       },
     ],
   };

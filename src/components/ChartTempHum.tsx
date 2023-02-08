@@ -90,12 +90,12 @@ export default function ReadingsChart(props: IProps) {
         },
 
         grid: {
-          color: chartColors.grid,
+          color: chartColors.greyBorder,
         },
       },
       y1: {
         grid: {
-          color: chartColors.grid,
+          color: chartColors.greyBorder,
         },
         position: "left",
         title: {
@@ -163,13 +163,13 @@ export default function ReadingsChart(props: IProps) {
         yAxisID: "y1",
         hidden: datasetHidden["Teplota"],
 
-        backgroundColor: "brown",
-        borderColor: "brown",
+        backgroundColor: chartColors.lineRed,
+        borderColor: chartColors.lineRed,
 
         pointRadius: 2,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: "brown",
-        pointHoverBorderColor: "brown",
+        pointHoverBackgroundColor: chartColors.lineRed,
+        pointHoverBorderColor: chartColors.lineRed,
       },
       {
         label: "Teplota BMP",
@@ -177,13 +177,13 @@ export default function ReadingsChart(props: IProps) {
         yAxisID: "y1",
         hidden: datasetHidden["Teplota BMP"],
 
-        backgroundColor: "red",
-        borderColor: "red",
+        backgroundColor: chartColors.lineYellow,
+        borderColor: chartColors.lineYellow,
 
         pointRadius: 2,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: "red",
-        pointHoverBorderColor: "red",
+        pointHoverBackgroundColor: chartColors.lineYellow,
+        pointHoverBorderColor: chartColors.lineYellow,
       },
       {
         label: "Teplota DHT",
@@ -191,13 +191,13 @@ export default function ReadingsChart(props: IProps) {
         yAxisID: "y1",
         hidden: datasetHidden["Teplota DHT"],
 
-        backgroundColor: "orange",
-        borderColor: "orange",
+        backgroundColor: chartColors.lineOrange,
+        borderColor: chartColors.lineOrange,
 
         pointRadius: 2,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: "orange",
-        pointHoverBorderColor: "orange",
+        pointHoverBackgroundColor: chartColors.lineOrange,
+        pointHoverBorderColor: chartColors.lineOrange,
       },
       {
         label: "Vlhkost",
@@ -205,13 +205,13 @@ export default function ReadingsChart(props: IProps) {
         yAxisID: "y2",
         hidden: datasetHidden["Vlhkost"],
 
-        backgroundColor: "blue",
-        borderColor: "blue",
+        backgroundColor: chartColors.lineBlue,
+        borderColor: chartColors.lineBlue,
 
         pointRadius: 2,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: "blue",
-        pointHoverBorderColor: "blue",
+        pointHoverBackgroundColor: chartColors.lineBlue,
+        pointHoverBorderColor: chartColors.lineBlue,
       },
     ],
   };

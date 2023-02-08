@@ -3,19 +3,22 @@
 $font-stack: "Roboto", sans-serif;
 $font-stack-mono: "Roboto Mono", monospace;
 
-$font-color-primary: rgb(139, 148, 158);
-$font-color-secondary: rgb(240, 246, 252);
-$font-color-blue: rgb(88, 166, 255);
-$font-color-red: rgb(248, 81, 73);
+$greyLight: rgb(24, 27, 31);
+$greyDark: rgb(17, 18, 23);
 
-$color-primary: rgb(13, 17, 23);
-$color-secondary: rgb(22, 27, 34);
-$color-grey-dark: rgb(33, 38, 45);
-$color-grey-light: rgb(55, 59, 66);
-$color-green-dark: rgb(35, 134, 54);
-$color-green-light: rgb(56, 145, 75);
-$color-black: rgb(1, 4, 9);
-$color-red: rgb(218, 54, 51);
+$fontWhite: rgb(204, 204, 220); // for icons too
+$fontBlue: rgb(110, 159, 255);
+
+$greyBorder: rgba(204, 204, 220, 0.15);
+$greyIcon: rgba(204, 204, 220, 0.65); // unselected icon
+
+$lineGreen: rgb(115, 191, 105);
+$lineYellow: rgb(242, 204, 12);
+$lineBlue: rgb(138, 184, 255);
+$lineOrange: rgb(255, 120, 10);
+$lineRed: rgb(242, 73, 92);
+$linePurple: rgb(184, 119, 217);
+$lineBlueDark: rgb(20, 58, 114);
 
 * {
   padding: 0;
@@ -36,8 +39,8 @@ body,
   //overflow-y: hidden;
 
   font-family: $font-stack;
-  color: $font-color-primary;
-  background-color: $color-primary;
+  color: $fontWhite;
+  background-color: $greyDark;
 }
 
 .app {
@@ -58,9 +61,9 @@ button {
   padding: 0.5rem 0.8rem;
   border-radius: 1rem;
 
-  background-color: $color-secondary;
+  background-color: $greyLight;
 
-  color: $font-color-secondary;
+  color: $fontBlue;
   font-size: 1rem;
 }
 
@@ -93,8 +96,10 @@ main {
     width: 47vw; // fix this
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
+    gap: 2rem;
 
     canvas {
+      background-color: $greyLight;
       flex: 1 1 auto;
     }
   }
@@ -109,6 +114,6 @@ footer {
 
   a {
     text-decoration: none;
-    color: $font-color-blue;
+    color: $fontBlue;
   }
 }
