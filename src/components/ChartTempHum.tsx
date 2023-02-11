@@ -81,7 +81,7 @@ export default function ReadingsChart(props: IProps) {
   // extend options
   const options: ChartOptions<"line"> & { plugins: { crosshair: CrosshairOptions } } = {
     animation: false,
-    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         type: "time",
