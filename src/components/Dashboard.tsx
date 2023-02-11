@@ -55,25 +55,35 @@ export default function Dashboard(props: IProps) {
   );
 
   return (
-    <div className="dashboard">
-      <p>Aktuální teplota</p>
-      <p>{round(temperature_avg, 1)} ˚C</p>
+    <section className="dashboard">
+      <div className="widget">
+        <h3>Aktuální teplota</h3>
+        <p>{round(temperature_avg, 1)} ˚C</p>
+      </div>
 
-      <p>Aktuální vlhkost</p>
-      <p>{round(humidity_DHT, 0)} %</p>
+      <div className="widget">
+        <h3>Aktuální vlhkost</h3>
+        <p>{round(humidity_DHT, 0)} %</p>
+      </div>
 
-      <p>Poslední aktualizace</p>
-      <p>
-        {hours}:{minutes} ({dayOfMonth}.{month}.{year})
-      </p>
+      <div className="widget">
+        <h3>Poslední aktualizace</h3>
+        <p>
+          {hours}:{minutes} ({dayOfMonth}.{month}.{year})
+        </p>
+      </div>
 
-      <p>Další aktualizace za</p>
-      <Countdown targetDate={nextReadingDate} />
+      <div className="widget">
+        <h3>Další aktualizace za</h3>
+        <Countdown targetDate={nextReadingDate} />
+      </div>
 
-      <p>Min / max teplota (24 h)</p>
-      <p>
-        {round(min, 1)} / {round(max, 1)} ˚C
-      </p>
-    </div>
+      <div className="widget">
+        <h3>Min / max teplota (24 h)</h3>
+        <p>
+          {round(min, 1)} / {round(max, 1)} ˚C
+        </p>
+      </div>
+    </section>
   );
 }

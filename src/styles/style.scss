@@ -85,22 +85,56 @@ ol {
 
 main {
   flex: 1 1 auto;
-  padding: 1vw;
+  padding: 16px;
 
   display: flex;
   flex-direction: column;
+  gap: 8px;
+
+  .dashboard {
+    display: flex;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    .widget {
+      display: flex;
+      flex: 1 1 0;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px;
+
+      background-color: $greyLight;
+      border: 1px solid $greyBorder;
+      border-radius: 3px;
+
+      h3 {
+        white-space: nowrap;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      p {
+        white-space: nowrap;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
+  }
 
   .charts {
     display: grid;
 
-    width: 47vw; // fix this
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    gap: 2rem;
+    gap: 8px;
 
-    canvas {
+    .chartDiv {
+      // chart.js canvases need to be placed inside another element, otherwise css won't work properly
       background-color: $greyLight;
-      flex: 1 1 auto;
+      border: 1px solid $greyBorder;
+      border-radius: 3px;
     }
   }
 }
@@ -115,5 +149,14 @@ footer {
   a {
     text-decoration: none;
     color: $fontBlue;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  main {
+    .charts {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
   }
 }

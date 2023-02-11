@@ -66,10 +66,14 @@ export default function App() {
     <div className="app">
       <main>
         <Dashboard readings={readings} />
-        <div className="charts">
-          <ChartTempHum readings={readings} />
-          <ChartPress readings={readings} />
-        </div>
+        <section className="charts">
+          <div className="chartDiv">
+            <ChartTempHum readings={readings} />
+          </div>
+          <div className="chartDiv">
+            <ChartPress readings={readings} />
+          </div>
+        </section>
       </main>
 
       <Footer />
