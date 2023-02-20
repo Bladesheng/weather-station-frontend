@@ -19,7 +19,7 @@ module.exports = {
       template: "./src/pages/index.html",
     }),
     new CopyPlugin({
-      patterns: [{ from: "./static/images/", to: "./images" }],
+      patterns: [{ from: "./src/assets/images/", to: "./images" }],
     }),
   ],
   resolve: {
