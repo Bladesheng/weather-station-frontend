@@ -1,5 +1,6 @@
 import "@styles/style.scss";
-import "@styles/favicon.ico";
+import "@static/favicon.ico";
+import "@static/manifest.webmanifest";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
