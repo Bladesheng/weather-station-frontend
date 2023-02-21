@@ -3,8 +3,15 @@
 export {}; // export empty object because of tsc --isolatedModules flag
 declare const self: ServiceWorkerGlobalScope;
 
-const cacheName = "meteostanice-pwa-v6";
+const cacheName = "meteostanice-pwa-v7";
 const filesToCache = ["/", "/index.html", "/app.js", "/favicon.ico", "/manifest.webmanifest"];
+
+if (self.location.host === "bladesheng.github.io") {
+  filesToCache.forEach((relativeUrl, index) => {
+    filesToCache[index] = `/weather-station-frontend${relativeUrl}`;
+    // because the website is not hosted at the root but at "/weather-station-frontend"
+  });
+}
 
 // Install the service worker and cache all of the app's content
 self.addEventListener("install", (e) => {
