@@ -4,8 +4,8 @@
 
 Frontend web app used for displaying data collected by my weather station:
 
-- [Weather-station](https://github.com/Bladesheng/weather-station-V1)
-- [Backend](https://github.com/Bladesheng/weather-station-backend)
+- [Weather station](https://github.com/Bladesheng/weather-station-V1)
+- [Backend API](https://github.com/Bladesheng/weather-station-backend)
 
 ## Building locally
 
