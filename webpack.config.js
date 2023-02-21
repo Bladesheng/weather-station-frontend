@@ -9,6 +9,7 @@ module.exports = {
   // devtool: "source-map",
   entry: {
     app: "./src/pages/index.tsx",
+    sw: "./src/workers/sw.ts",
   },
   devServer: {
     static: "./dist",
