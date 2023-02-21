@@ -3,6 +3,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
   // mode: "development",
@@ -21,6 +22,9 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [{ from: "./src/assets/images/", to: "./images" }],
+    }),
+    new webpack.DefinePlugin({
+      BUILD_NUMBER: JSON.stringify(Date.now()), // for generating new name of cache on build
     }),
   ],
   resolve: {

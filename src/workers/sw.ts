@@ -3,7 +3,11 @@
 export {}; // export empty object because of tsc --isolatedModules flag
 declare const self: ServiceWorkerGlobalScope;
 
-const cacheName = "meteostanice-pwa-v7";
+// This number is changed by webpack everytime a new build is made.
+// New cache name forces wipe of the old cache and reload of all precached assets.
+declare const BUILD_NUMBER: string;
+
+const cacheName = `meteostanice-pwa-v${BUILD_NUMBER}`;
 const filesToCache = ["/", "/index.html", "/app.js", "/favicon.ico", "/manifest.webmanifest"];
 
 if (self.location.host === "bladesheng.github.io") {
