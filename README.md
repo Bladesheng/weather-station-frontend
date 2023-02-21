@@ -9,20 +9,20 @@ Frontend web app used for displaying data collected by my weather station:
 
 ## Building locally
 
-Clone the repository, then:
+- Clone the repository, then:
 
 ```
 npm install
 npm run build
 ```
 
-Then to deploy to Github pages, run:
+- Then to deploy to Github pages, run:
 
 ```
 npm run deploy
 ```
 
-Or run the development server with:
+- Or run the development server with:
 
 ```
 npm run dev
