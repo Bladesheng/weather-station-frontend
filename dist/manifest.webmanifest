@@ -34,7 +34,8 @@
       "type": "image/png"
     }
   ],
-  "start_url": "weather-station-frontend/index.html",
+  "start_url": "/index.html",
+  "scope": ".",
   "display": "standalone",
   "theme_color": "rgb(17, 18, 23)",
   "background_color": "rgb(17, 18, 23)"
