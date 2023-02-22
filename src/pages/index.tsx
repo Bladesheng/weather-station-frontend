@@ -1,6 +1,9 @@
 import "@styles/style.scss";
-import "@assets/favicon.ico";
+
 import "@assets/manifest.webmanifest";
+
+import "@assets/icons/favicons/favicon.ico";
+import "@assets/icons/favicons/apple-touch-icon.png";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
