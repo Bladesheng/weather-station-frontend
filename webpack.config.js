@@ -6,8 +6,6 @@ const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = {
-  // mode: "development",
-  // devtool: "source-map",
   entry: {
     app: "./src/pages/index.tsx",
     sw: "./src/workers/sw.ts",
