@@ -1,0 +1,11 @@
+.eslintignore
+.git
+.gitignore
+.prettierrc.json
+dist
+docker-compose.yml
+Dockerfile
+LICENSE
+node_modules
+todo.txt
+README.md
