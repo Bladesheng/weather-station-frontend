@@ -9,28 +9,19 @@ Frontend web app used for displaying data collected by my weather station:
 
 ## Building locally
 
-- Clone the repository, then:
+- Clone the repository, then run dev server with:
 
-```
-npm install
-npm run build
-```
-
-- Then to deploy to Github pages, run:
-
-```
-npm run deploy
+```bash
+docker compose up -d
 ```
 
-- Or run the development server with:
+- The website will run at `http://localhost:8000/`
 
-```
-npm run dev
-```
+GitHub actions build and deploy site whenever something is pushed to main or when PR is merged.
 
 Formatting with `Prettier` and linting with `ESLint`:
 
-```
+```bash
 npm run format
 npm run lint
 ```

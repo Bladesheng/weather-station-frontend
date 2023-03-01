@@ -5,10 +5,8 @@
   "main": "./src/pages/index.tsx",
   "private": "true",
   "scripts": {
-    "watch": "webpack --watch --mode development --devtool eval-source-map",
     "dev": "webpack server --open --hot --mode development --devtool eval-source-map",
     "build": "webpack --mode production --devtool source-map",
-    "deploy": "git subtree push --prefix dist origin gh-pages",
     "format": "prettier --ignore-path .eslintignore --write \"**/*.+(js|ts|tsx|json|html|scss)\"",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.jsx,.ts,.tsx ."
   },
