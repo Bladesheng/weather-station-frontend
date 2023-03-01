@@ -1,5 +1,6 @@
 .eslintignore
 .git
+.github
 .gitignore
 .prettierrc.json
 dist
