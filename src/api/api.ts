@@ -44,5 +44,6 @@ export async function fetchReadingsRange(start: Date, end: Date, status: string)
     return body as IReading[];
   } catch (error) {
     console.error("There has been error with fetch request: ", error);
+    return []; // if fetch fails (not connected to the internet)
   }
 }

@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Dashboard from "@components/Dashboard";
 import ChartTempHum from "@components/ChartTempHum";
 import ChartPress from "@components/ChartPress";
+import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
 import { fetchReadingsRange, IReading } from "@api/api";
@@ -18,11 +19,9 @@ const status = "normal";
 const initialReadings = await fetchReadingsRange(startDate, endDate, status);
 
 export default function App() {
-  if (initialReadings === undefined) {
-    throw new Error("Fetching readings failed");
-  }
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [readings, setReadings] = useState<IReading[]>(initialReadings);
 
-  const [readings, setReadings] = useState(initialReadings);
   const readingsRef = useRef<IReading[]>(readings);
   useEffect(() => {
     readingsRef.current = readings; // make sure the ref is always up to date
@@ -31,8 +30,8 @@ export default function App() {
   const [listening, setListening] = useState(false);
 
   useEffect(() => {
-    // open new Server-sent events connection if not listening yet
-    if (!listening) {
+    // open new Server-Sent Events connection if you are online and not listening yet
+    if (!listening && isOnline) {
       const events = new EventSource("https://weather-station-backend.fly.dev/api/readings/events");
       //const events = new EventSource("http://localhost:8080/api/readings/events");
 
@@ -54,13 +53,33 @@ export default function App() {
       };
 
       events.onerror = (error) => {
+        events.close(); // close the connection to prevent additional errors
         setListening(false);
         console.error("EventSource failed:", error);
       };
 
       setListening(true);
     }
-  }, [listening, readings]);
+  }, [listening, readings, isOnline]);
+
+  useEffect(() => {
+    window.addEventListener("online", async () => {
+      setIsOnline(navigator.onLine);
+
+      // if you don't have any readings saved (because you were offline when you opened the page)
+      if (readings.length === 0) {
+        setReadings(await fetchReadingsRange(startDate, endDate, status));
+      }
+
+      console.log("Going Online");
+    });
+
+    window.addEventListener("offline", async () => {
+      setIsOnline(navigator.onLine);
+
+      console.log("Going Offline");
+    });
+  }, []);
 
   return (
     <div className="app">
@@ -75,6 +94,8 @@ export default function App() {
           </div>
         </section>
       </main>
+
+      <OfflinePopup isOnline={isOnline} />
 
       <Footer />
     </div>

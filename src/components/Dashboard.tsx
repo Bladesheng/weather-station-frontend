@@ -34,6 +34,12 @@ function getAvgDelay(readings: IReading[]) {
 }
 
 export default function Dashboard(props: IProps) {
+  // if you don't have any readings available yet (probably because you are offline)
+  if (props.readings.length === 0) {
+    // to prevent TypeErrors bellow
+    return <h1>Načítání...</h1>;
+  }
+
   const { temperature_BMP, temperature_DHT, humidity_DHT } = props.readings[0];
   const temperature_avg = (temperature_BMP + temperature_DHT) / 2;
 
