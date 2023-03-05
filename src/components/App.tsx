@@ -12,11 +12,7 @@ import { fetchReadingsRange, IReading } from "@api/api";
 
 Storage.init();
 
-const startDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000); // 24 hours ago in miliseconds
-const endDate = new Date(); // up to now
-const status = "normal";
-
-const initialReadings = await fetchReadingsRange(startDate, endDate, status);
+const initialReadings = await fetchReadingsRange();
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -29,6 +25,7 @@ export default function App() {
 
   const [listening, setListening] = useState(false);
 
+  // for maintaining SSE connection
   useEffect(() => {
     // open new Server-Sent Events connection if you are online and not listening yet
     if (!listening && isOnline) {
@@ -55,31 +52,39 @@ export default function App() {
       events.onerror = (error) => {
         events.close(); // close the connection to prevent additional errors
         setListening(false);
-        console.error("EventSource failed:", error);
+        console.warn("EventSource failed:", error);
       };
 
       setListening(true);
     }
   }, [listening, readings, isOnline]);
 
+  // listeners for when you go online / offline, that update state, fetch new readings, etc.
   useEffect(() => {
-    window.addEventListener("online", async () => {
+    window.addEventListener("online", () => {
+      console.log("Going Online");
       setIsOnline(navigator.onLine);
 
-      // if you don't have any readings saved (because you were offline when you opened the page)
-      if (readings.length === 0) {
-        setReadings(await fetchReadingsRange(startDate, endDate, status));
-      }
-
-      console.log("Going Online");
+      // Fetch latest readings after reconnecting to a network
+      setTimeout(async () => {
+        setReadings(await fetchReadingsRange());
+        // Timeout is used because sometimes, the request is sent too fast after reconnecting to a network,
+        // the DNS fails to resolve and as a result, the request for new readings also fails
+        // (This could possibly be only VirtualBox issue, but better to be safe)
+      }, 0);
     });
 
-    window.addEventListener("offline", async () => {
-      setIsOnline(navigator.onLine);
-
+    window.addEventListener("offline", () => {
       console.log("Going Offline");
+      setIsOnline(navigator.onLine);
     });
   }, []);
+
+  // save all current readings in Local Storage whenever they change
+  // (so they can be ready when you come back later in offline mode)
+  useEffect(() => {
+    Storage.readings = readings;
+  }, [readings]);
 
   return (
     <div className="app">
