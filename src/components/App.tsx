@@ -5,24 +5,19 @@ import React, { useState, useEffect, useRef } from "react";
 import Dashboard from "@components/Dashboard";
 import ChartTempHum from "@components/ChartTempHum";
 import ChartPress from "@components/ChartPress";
+import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
 import { fetchReadingsRange, IReading } from "@api/api";
 
 Storage.init();
 
-const startDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000); // 24 hours ago in miliseconds
-const endDate = new Date(); // up to now
-const status = "normal";
-
-const initialReadings = await fetchReadingsRange(startDate, endDate, status);
+const initialReadings = await fetchReadingsRange();
 
 export default function App() {
-  if (initialReadings === undefined) {
-    throw new Error("Fetching readings failed");
-  }
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [readings, setReadings] = useState<IReading[]>(initialReadings);
 
-  const [readings, setReadings] = useState(initialReadings);
   const readingsRef = useRef<IReading[]>(readings);
   useEffect(() => {
     readingsRef.current = readings; // make sure the ref is always up to date
@@ -30,9 +25,10 @@ export default function App() {
 
   const [listening, setListening] = useState(false);
 
+  // for maintaining SSE connection
   useEffect(() => {
-    // open new Server-sent events connection if not listening yet
-    if (!listening) {
+    // open new Server-Sent Events connection if you are online and not listening yet
+    if (!listening && isOnline) {
       const events = new EventSource("https://weather-station-backend.fly.dev/api/readings/events");
       //const events = new EventSource("http://localhost:8080/api/readings/events");
 
@@ -54,13 +50,41 @@ export default function App() {
       };
 
       events.onerror = (error) => {
+        events.close(); // close the connection to prevent additional errors
         setListening(false);
-        console.error("EventSource failed:", error);
+        console.warn("EventSource failed:", error);
       };
 
       setListening(true);
     }
-  }, [listening, readings]);
+  }, [listening, readings, isOnline]);
+
+  // listeners for when you go online / offline, that update state, fetch new readings, etc.
+  useEffect(() => {
+    window.addEventListener("online", () => {
+      console.log("Going Online");
+      setIsOnline(navigator.onLine);
+
+      // Fetch latest readings after reconnecting to a network
+      setTimeout(async () => {
+        setReadings(await fetchReadingsRange());
+        // Timeout is used because sometimes, the request is sent too fast after reconnecting to a network,
+        // the DNS fails to resolve and as a result, the request for new readings also fails
+        // (This could possibly be only VirtualBox issue, but better to be safe)
+      }, 0);
+    });
+
+    window.addEventListener("offline", () => {
+      console.log("Going Offline");
+      setIsOnline(navigator.onLine);
+    });
+  }, []);
+
+  // save all current readings in Local Storage whenever they change
+  // (so they can be ready when you come back later in offline mode)
+  useEffect(() => {
+    Storage.readings = readings;
+  }, [readings]);
 
   return (
     <div className="app">
@@ -75,6 +99,8 @@ export default function App() {
           </div>
         </section>
       </main>
+
+      <OfflinePopup isOnline={isOnline} />
 
       <Footer />
     </div>

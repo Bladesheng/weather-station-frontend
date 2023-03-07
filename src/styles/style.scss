@@ -81,6 +81,10 @@ ol {
   list-style-type: none;
 }
 
+.hidden {
+  display: none !important;
+}
+
 //
 
 main {
@@ -136,6 +140,25 @@ main {
       border: 1px solid $greyBorder;
       border-radius: 3px;
     }
+  }
+}
+
+.offlinePopup {
+  position: fixed;
+  right: 3%;
+  bottom: 3%;
+
+  display: grid;
+  grid-template-columns: fit-content(40vw) auto;
+  padding: 16px;
+
+  background-color: $greyLight;
+  border: 1px solid $greyBorder;
+  border-radius: 3px;
+
+  button {
+    background: none;
+    color: $fontWhite;
   }
 }
 
