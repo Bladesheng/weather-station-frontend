@@ -2,9 +2,8 @@ import { Storage } from "@utils/storage";
 
 import React, { useState, useEffect, useRef } from "react";
 
-import Dashboard from "@components/Dashboard";
-import ChartTempHum from "@components/ChartTempHum";
-import ChartPress from "@components/ChartPress";
+import Navbar from "@components/Navbar";
+import Overview from "@components/Overview";
 import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
@@ -88,20 +87,13 @@ export default function App() {
 
   return (
     <div className="app">
+      <Navbar />
+
       <main>
-        <Dashboard readings={readings} />
-        <section className="charts">
-          <div className="chartDiv">
-            <ChartTempHum readings={readings} />
-          </div>
-          <div className="chartDiv">
-            <ChartPress readings={readings} />
-          </div>
-        </section>
+        <Overview readings={readings} />
       </main>
 
       <OfflinePopup isOnline={isOnline} />
-
       <Footer />
     </div>
   );
