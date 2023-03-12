@@ -1,10 +1,10 @@
 import { Storage } from "@utils/storage";
 
 import React, { useState, useEffect, useRef } from "react";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
-import Dashboard from "@components/Dashboard";
-import ChartTempHum from "@components/ChartTempHum";
-import ChartPress from "@components/ChartPress";
+import Navbar from "@components/Navbar";
+import Overview from "@components/Overview";
 import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
@@ -87,22 +87,22 @@ export default function App() {
   }, [readings]);
 
   return (
-    <div className="app">
-      <main>
-        <Dashboard readings={readings} />
-        <section className="charts">
-          <div className="chartDiv">
-            <ChartTempHum readings={readings} />
-          </div>
-          <div className="chartDiv">
-            <ChartPress readings={readings} />
-          </div>
-        </section>
-      </main>
+    <HashRouter>
+      <div className="app">
+        <Navbar />
 
-      <OfflinePopup isOnline={isOnline} />
+        <main>
+          <Routes>
+            <Route path="/" element={<Overview readings={readings} />} />
+            <Route path="historie" element={<h1>Historie WIP</h1>} />
+            <Route path="predpoved" element={<h1>Předpověď WIP</h1>} />
+            <Route path="info" element={<h1>O meteostanici WIP</h1>} />
+          </Routes>
+        </main>
 
-      <Footer />
-    </div>
+        <OfflinePopup isOnline={isOnline} />
+        <Footer />
+      </div>
+    </HashRouter>
   );
 }
