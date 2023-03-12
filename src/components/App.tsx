@@ -1,6 +1,7 @@
 import { Storage } from "@utils/storage";
 
 import React, { useState, useEffect, useRef } from "react";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "@components/Navbar";
 import Overview from "@components/Overview";
@@ -86,15 +87,22 @@ export default function App() {
   }, [readings]);
 
   return (
-    <div className="app">
-      <Navbar />
+    <HashRouter>
+      <div className="app">
+        <Navbar />
 
-      <main>
-        <Overview readings={readings} />
-      </main>
+        <main>
+          <Routes>
+            <Route path="/" element={<Overview readings={readings} />} />
+            <Route path="historie" element={<h1>Historie WIP</h1>} />
+            <Route path="predpoved" element={<h1>Předpověď WIP</h1>} />
+            <Route path="info" element={<h1>O meteostanici WIP</h1>} />
+          </Routes>
+        </main>
 
-      <OfflinePopup isOnline={isOnline} />
-      <Footer />
-    </div>
+        <OfflinePopup isOnline={isOnline} />
+        <Footer />
+      </div>
+    </HashRouter>
   );
 }
