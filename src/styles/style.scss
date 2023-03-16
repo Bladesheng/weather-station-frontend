@@ -166,6 +166,23 @@ main {
       }
     }
   }
+
+  .historyTab {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    .chartDiv {
+      // chart.js canvases need to be placed inside another element, otherwise css won't work properly
+
+      flex: 1 1 auto;
+
+      background-color: $greyLight;
+      border: 1px solid $greyBorder;
+      border-radius: 3px;
+    }
+  }
 }
 
 .offlinePopup {

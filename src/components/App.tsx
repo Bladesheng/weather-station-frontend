@@ -5,6 +5,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "@components/Navbar";
 import OverviewTab from "@components/OverviewTab";
+import HistoryTab from "@components/HistoryTab";
 import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
@@ -94,7 +95,7 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<OverviewTab readings={readings} />} />
-            <Route path="historie" element={<h1>Historie WIP</h1>} />
+            <Route path="historie" element={<HistoryTab />} />
             <Route path="predpoved" element={<h1>Předpověď WIP</h1>} />
             <Route path="info" element={<h1>O meteostanici WIP</h1>} />
           </Routes>
