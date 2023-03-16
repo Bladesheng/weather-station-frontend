@@ -10,7 +10,7 @@ type IProps = {
   readings: IReading[];
 };
 
-export default function Overview(props: IProps) {
+export default function OverviewTab(props: IProps) {
   const { readings } = props;
 
   return (
