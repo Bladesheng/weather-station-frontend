@@ -112,7 +112,7 @@ main {
   display: flex;
   padding: 0 16px;
 
-  .overview {
+  .overviewTab {
     flex: 1 1 auto;
 
     display: flex;
@@ -205,7 +205,7 @@ footer {
   }
 
   main {
-    .overview {
+    .overviewTab {
       .charts {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 0.6fr;

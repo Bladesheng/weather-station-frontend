@@ -14,7 +14,7 @@ export default function OverviewTab(props: IProps) {
   const { readings } = props;
 
   return (
-    <section className="overview">
+    <section className="overviewTab">
       <Dashboard readings={readings} />
       <section className="charts">
         <div className="chartDiv">
