@@ -18,6 +18,7 @@ const initialReadings = await fetchReadingsRange();
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [readings, setReadings] = useState<IReading[]>(initialReadings);
+  const [readingsHistory, setReadingsHistory] = useState<IReading[]>([]); // save the state here so it doesn't get deleted when switching tabs
 
   const readingsRef = useRef<IReading[]>(readings);
   useEffect(() => {
@@ -95,7 +96,15 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<OverviewTab readings={readings} />} />
-            <Route path="historie" element={<HistoryTab />} />
+            <Route
+              path="historie"
+              element={
+                <HistoryTab
+                  readingsHistory={readingsHistory}
+                  setReadingsHistory={setReadingsHistory}
+                />
+              }
+            />
             <Route path="predpoved" element={<h1>Předpověď WIP</h1>} />
             <Route path="info" element={<h1>O meteostanici WIP</h1>} />
           </Routes>
