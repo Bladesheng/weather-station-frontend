@@ -22,6 +22,7 @@ import {
   ChartEvent,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
+import zoomPlugin from "chartjs-plugin-zoom";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -35,7 +36,8 @@ ChartJS.register(
 
   ChartPluginCrosshair,
   Legend,
-  Tooltip
+  Tooltip,
+  zoomPlugin
 );
 
 type IProps = {
@@ -168,6 +170,39 @@ export default function ChartInteractive(props: IProps) {
         callbacks: {
           label: labelCb,
           title: titleCb,
+        },
+      },
+
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: "x",
+          modifierKey: "ctrl",
+        },
+
+        limits: {
+          x: {
+            min: "original",
+            max: "original",
+          },
+          y: {
+            min: "original",
+            max: "original",
+          },
+        },
+
+        zoom: {
+          mode: "x",
+          wheel: {
+            enabled: true,
+          },
+          drag: {
+            enabled: true,
+          },
+
+          pinch: {
+            enabled: true,
+          },
         },
       },
     },
