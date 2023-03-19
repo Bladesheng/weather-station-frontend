@@ -82,6 +82,13 @@ ol {
   display: none !important;
 }
 
+canvas {
+  width: 100% !important;
+  // This makes shrinking the charts possible.
+  // Using overflow: auto; on parent element worked too.
+  // https://github.com/jtblin/angular-chart.js/issues/614
+}
+
 //
 
 nav {
