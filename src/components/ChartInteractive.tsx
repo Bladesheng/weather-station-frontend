@@ -39,40 +39,46 @@ ChartJS.register(
 );
 
 type IProps = {
-  readings: IReading[];
+  readingsHistory: IReading[];
 };
 
 export default function ChartInteractive(props: IProps) {
   const [datasetHidden, setDatasetHidden] = useState(Storage.datasetHidden);
+  const readings = props.readingsHistory;
 
   useEffect(() => {
     // save visibility preferences in local storage
     Storage.datasetHidden = datasetHidden;
   }, [datasetHidden]);
 
-  const readings_temperature_avg = props.readings.map((reading) => {
+  const readings_temperature_avg = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: (reading.temperature_BMP + reading.temperature_DHT) / 2, // average value of the 2 sensors
     };
   });
-
-  const readings_temperature_BMP = props.readings.map((reading) => {
+  const readings_temperature_BMP = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: reading.temperature_BMP,
     };
   });
-  const readings_temperature_DHT = props.readings.map((reading) => {
+  const readings_temperature_DHT = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: reading.temperature_DHT,
     };
   });
-  const readings_humidity_DHT = props.readings.map((reading) => {
+  const readings_humidity_DHT = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: reading.humidity_DHT,
+    };
+  });
+  const readings_pressure_BMP = readings.map((reading) => {
+    return {
+      x: reading.createdAt,
+      y: reading.pressure_BMP / 100, // unit conversion from Pa to hPa
     };
   });
 
@@ -94,6 +100,7 @@ export default function ChartInteractive(props: IProps) {
         },
       },
       y1: {
+        display: "auto",
         grid: {
           color: chartColors.greyBorder,
         },
@@ -104,6 +111,7 @@ export default function ChartInteractive(props: IProps) {
         },
       },
       y2: {
+        display: "auto",
         grid: {
           drawOnChartArea: false,
         },
@@ -111,6 +119,17 @@ export default function ChartInteractive(props: IProps) {
         title: {
           display: true,
           text: "Relativní vlhkost [%]",
+        },
+      },
+      y3: {
+        display: "auto",
+        grid: {
+          drawOnChartArea: false,
+        },
+        position: "right",
+        title: {
+          display: true,
+          text: "Tlak [hPa]",
         },
       },
     },
@@ -212,6 +231,20 @@ export default function ChartInteractive(props: IProps) {
         pointHoverRadius: 5,
         pointHoverBackgroundColor: chartColors.lineBlue,
         pointHoverBorderColor: chartColors.lineBlue,
+      },
+      {
+        label: "Tlak",
+        data: readings_pressure_BMP,
+        yAxisID: "y3",
+        hidden: datasetHidden["Tlak"],
+
+        backgroundColor: chartColors.linePurple,
+        borderColor: chartColors.linePurple,
+
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: chartColors.linePurple,
+        pointHoverBorderColor: chartColors.linePurple,
       },
     ],
   };

@@ -19,7 +19,7 @@ export default function HistoryTab(props: IProps) {
       />
 
       <div className="chartDiv">
-        <ChartInteractive readings={props.readingsHistory} />
+        <ChartInteractive readingsHistory={props.readingsHistory} />
       </div>
     </section>
   );

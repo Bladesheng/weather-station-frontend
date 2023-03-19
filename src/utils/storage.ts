@@ -8,6 +8,7 @@ export const Storage = (() => {
     "Teplota BMP": true,
     "Teplota DHT": true,
     Vlhkost: false,
+    Tlak: true,
   };
   let readings: IReading[] = [];
   let lastRange = "";

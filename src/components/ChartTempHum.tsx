@@ -44,32 +44,33 @@ type IProps = {
 
 export default function ReadingsChart(props: IProps) {
   const [datasetHidden, setDatasetHidden] = useState(Storage.datasetHidden);
+  const { readings } = props;
 
   useEffect(() => {
     // save visibility preferences in local storage
     Storage.datasetHidden = datasetHidden;
   }, [datasetHidden]);
 
-  const readings_temperature_avg = props.readings.map((reading) => {
+  const readings_temperature_avg = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: (reading.temperature_BMP + reading.temperature_DHT) / 2, // average value of the 2 sensors
     };
   });
 
-  const readings_temperature_BMP = props.readings.map((reading) => {
+  const readings_temperature_BMP = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: reading.temperature_BMP,
     };
   });
-  const readings_temperature_DHT = props.readings.map((reading) => {
+  const readings_temperature_DHT = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: reading.temperature_DHT,
     };
   });
-  const readings_humidity_DHT = props.readings.map((reading) => {
+  const readings_humidity_DHT = readings.map((reading) => {
     return {
       x: reading.createdAt,
       y: reading.humidity_DHT,
@@ -94,6 +95,7 @@ export default function ReadingsChart(props: IProps) {
         },
       },
       y1: {
+        display: "auto",
         grid: {
           color: chartColors.greyBorder,
         },
@@ -104,6 +106,7 @@ export default function ReadingsChart(props: IProps) {
         },
       },
       y2: {
+        display: "auto",
         grid: {
           drawOnChartArea: false,
         },
