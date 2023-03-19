@@ -55,6 +55,7 @@
   "dependencies": {
     "chart.js": "^4.1.2",
     "chartjs-adapter-date-fns": "^3.0.0",
+    "chartjs-plugin-zoom": "^2.0.0",
     "date-fns": "^2.29.3",
     "react-chartjs-2": "^5.2.0",
     "react-router-dom": "^6.9.0"

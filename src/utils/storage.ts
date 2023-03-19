@@ -8,19 +8,23 @@ export const Storage = (() => {
     "Teplota BMP": true,
     "Teplota DHT": true,
     Vlhkost: false,
+    Tlak: true,
   };
   let readings: IReading[] = [];
+  let lastRange = "";
 
   // save everything to Local Storage
   function _save() {
     localStorage.setItem("datasetHidden", JSON.stringify(datasetHidden));
     localStorage.setItem("readings", JSON.stringify(readings));
+    localStorage.setItem("lastRange", JSON.stringify(lastRange));
   }
 
   // retrieve everything from Local Storage on startup
   function init() {
     const rawDatasetHidden = localStorage.getItem("datasetHidden");
     const rawReadings = localStorage.getItem("readings");
+    const rawLastRange = localStorage.getItem("lastRange");
 
     // if there is something saved,
     // retrieve it instead of using the default values
@@ -29,6 +33,9 @@ export const Storage = (() => {
     }
     if (rawReadings !== null) {
       readings = JSON.parse(rawReadings);
+    }
+    if (rawLastRange !== null) {
+      lastRange = JSON.parse(rawLastRange);
     }
   }
 
@@ -49,6 +56,14 @@ export const Storage = (() => {
     },
     get readings() {
       return readings;
+    },
+
+    set lastRange(newLastRange: typeof lastRange) {
+      lastRange = newLastRange;
+      _save();
+    },
+    get lastRange() {
+      return lastRange;
     },
   };
 })();

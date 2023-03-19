@@ -82,6 +82,21 @@ ol {
   display: none !important;
 }
 
+canvas {
+  position: absolute;
+
+  // Responsive charts and shrinking 101:
+  // 1) Using width: 100% !important; on canvas element allowed shrinking horizontally,
+  //    but that caused the chart to not respect it's parent's heigh and the chart expanded too much vertically.
+  // 2) Using overflow: auto; on chart's container (or in some cases the container's container lol) also allowed horizontal shrinking
+  //    without any weird vertical expanding.
+  // 3) Using position: absolute; makes both horizontal and vertical shrinking possible without any side effects (?).
+  //    (If this doesn't work, try absolute div container from issue #614)
+  //
+  // https://github.com/jtblin/angular-chart.js/issues/614
+  // https://github.com/chartjs/Chart.js/issues/9001
+}
+
 //
 
 nav {
@@ -112,7 +127,7 @@ main {
   display: flex;
   padding: 0 16px;
 
-  .overview {
+  .overviewTab {
     flex: 1 1 auto;
 
     display: flex;
@@ -159,11 +174,25 @@ main {
       gap: 8px;
 
       .chartDiv {
-        // chart.js canvases need to be placed inside another element, otherwise css won't work properly
         background-color: $greyLight;
         border: 1px solid $greyBorder;
         border-radius: 3px;
       }
+    }
+  }
+
+  .historyTab {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    .chartDiv {
+      flex: 1 1 auto;
+
+      background-color: $greyLight;
+      border: 1px solid $greyBorder;
+      border-radius: 3px;
     }
   }
 }
@@ -205,7 +234,7 @@ footer {
   }
 
   main {
-    .overview {
+    .overviewTab {
       .charts {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 0.6fr;
