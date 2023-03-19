@@ -245,7 +245,14 @@ footer {
 
 @media screen and (max-height: 600px) {
   main {
-    .overview {
+    .overviewTab {
+      .charts {
+        .chartDiv {
+          min-height: 300px; // for landscape mode
+        }
+      }
+    }
+    .historyTab {
       .chartDiv {
         min-height: 300px; // for landscape mode
       }
