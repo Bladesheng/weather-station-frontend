@@ -82,6 +82,13 @@ ol {
   display: none !important;
 }
 
+.chartDiv {
+  position: relative; // to anchor canvas element somewhere and make scrolling possible
+
+  background-color: $greyLight;
+  border: 1px solid $greyBorder;
+  border-radius: 3px;
+}
 canvas {
   position: absolute;
 
@@ -172,12 +179,6 @@ main {
       grid-template-columns: 1fr 0.6fr;
       grid-template-rows: 1fr;
       gap: 8px;
-
-      .chartDiv {
-        background-color: $greyLight;
-        border: 1px solid $greyBorder;
-        border-radius: 3px;
-      }
     }
   }
 
@@ -189,10 +190,6 @@ main {
 
     .chartDiv {
       flex: 1 1 auto;
-
-      background-color: $greyLight;
-      border: 1px solid $greyBorder;
-      border-radius: 3px;
     }
   }
 }
@@ -244,18 +241,7 @@ footer {
 }
 
 @media screen and (max-height: 600px) {
-  main {
-    .overviewTab {
-      .charts {
-        .chartDiv {
-          min-height: 300px; // for landscape mode
-        }
-      }
-    }
-    .historyTab {
-      .chartDiv {
-        min-height: 300px; // for landscape mode
-      }
-    }
+  .chartDiv {
+    min-height: 300px; // for mobile landscape mode
   }
 }
