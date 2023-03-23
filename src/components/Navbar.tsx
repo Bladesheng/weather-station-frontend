@@ -12,7 +12,7 @@ export default function Navbar() {
       </Link>
 
       <Link to="/historie" className={path === "/historie" ? "selected" : ""}>
-        Historie
+        Úplná data
       </Link>
 
       <Link to="/predpoved" className={path === "/predpoved" ? "selected" : ""}>
