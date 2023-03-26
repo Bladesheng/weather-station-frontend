@@ -5,7 +5,6 @@ import { Storage } from "@utils/storage";
 import { fetchReadingsRange, IReading } from "@api/api";
 
 const buttonTimes = {
-  "120 minut": 120 * 60 * 1000,
   "12 hodin": 12 * 60 * 60 * 1000,
   "24 hodin": 24 * 60 * 60 * 1000,
   "2 dny": 2 * 24 * 60 * 60 * 1000,
