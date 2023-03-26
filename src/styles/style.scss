@@ -218,6 +218,19 @@ main {
     .chartDiv {
       flex: 1 1 auto;
     }
+
+    button.csv {
+      margin-left: auto;
+
+      @extend %button-standard;
+
+      padding: 6px;
+
+      background-color: $greyLight;
+
+      border: 1px solid $greyBorder;
+      border-radius: 2px;
+    }
   }
 }
 
