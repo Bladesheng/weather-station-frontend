@@ -25,6 +25,8 @@ import "chartjs-adapter-date-fns";
 import zoomPlugin from "chartjs-plugin-zoom";
 import { Line } from "react-chartjs-2";
 
+import { cs } from "date-fns/locale";
+
 ChartJS.register(
   // line chart
   LineController,
@@ -94,7 +96,13 @@ export default function ChartInteractive(props: IProps) {
       x: {
         type: "time",
         time: {
+          minUnit: "hour",
           displayFormats: { hour: "HH:mm" },
+        },
+        adapters: {
+          date: {
+            locale: cs,
+          },
         },
 
         grid: {

@@ -24,6 +24,8 @@ import {
 import "chartjs-adapter-date-fns";
 import { Line } from "react-chartjs-2";
 
+import { cs } from "date-fns/locale";
+
 ChartJS.register(
   // line chart
   LineController,
@@ -88,6 +90,12 @@ export default function ReadingsChart(props: IProps) {
         type: "time",
         time: {
           displayFormats: { hour: "HH:mm" },
+          minUnit: "hour",
+        },
+        adapters: {
+          date: {
+            locale: cs,
+          },
         },
 
         grid: {
