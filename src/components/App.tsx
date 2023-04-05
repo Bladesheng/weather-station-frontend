@@ -11,8 +11,6 @@ import Footer from "@components/Footer";
 
 import { fetchReadingsRange, IReading } from "@api/api";
 
-Storage.init();
-
 const initialReadings = await fetchReadingsRange();
 
 export default function App() {
