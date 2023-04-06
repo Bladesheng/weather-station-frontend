@@ -19,6 +19,12 @@
   "rules": {
     "prefer-template": "warn",
     "@typescript-eslint/ban-ts-comment": "warn",
-    "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "seconds" }]
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "varsIgnorePattern": "seconds",
+        "argsIgnorePattern": "e"
+      }
+    ]
   }
 }

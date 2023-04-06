@@ -3,77 +3,18 @@
 export {}; // export empty object because of tsc --isolatedModules flag
 declare const self: ServiceWorkerGlobalScope;
 
-// This number is changed by webpack everytime a new build is made.
-// New cache name forces wipe of the old cache and reload of all precached assets.
-declare const BUILD_NUMBER: string;
+import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
+cleanupOutdatedCaches();
+precacheAndRoute(self.__WB_MANIFEST);
 
-const cacheName = `meteostanice-pwa-v${BUILD_NUMBER}`;
-const filesToCache = ["/", "/index.html", "/app.js", "/favicon.ico", "/manifest.webmanifest"];
-
-if (self.location.host === "bladesheng.github.io") {
-  filesToCache.forEach((relativeUrl, index) => {
-    filesToCache[index] = `/weather-station-frontend${relativeUrl}`;
-    // because the website is not hosted at the root but at "/weather-station-frontend"
-  });
-}
-
-// Install the service worker and cache all of the app's content
 self.addEventListener("install", (e) => {
-  e.waitUntil(
-    (async () => {
-      const cache = await caches.open(cacheName);
-      console.log("[SW] Installing new service worker and caching all files");
-      await cache.addAll(filesToCache);
-    })()
-  );
+  console.log("[SW] Installing new service worker");
 });
 
-// Serve cached content when offline
-self.addEventListener("fetch", (e) => {
-  const url = new URL(e.request.url);
-  const isPrecachedRequest = filesToCache.includes(url.pathname);
-  const isImageRequest = e.request.destination === "image";
+// self.addEventListener("fetch", (e) => {
+//   console.log(`[SW] Fetching resource: ${e.request.url}`);
+// });
 
-  if (isPrecachedRequest || isImageRequest) {
-    e.respondWith(
-      (async () => {
-        console.log(`[SW] Fetching resource: ${e.request.url}`);
-        // go to the cache first and return a cached response if we have one
-        const cache = await caches.open(cacheName);
-        const cachedResponse = await cache.match(e.request);
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-
-        // otherwise, hit the network and add the network response to the cache for later visits
-        const fetchedResponse = await fetch(e.request);
-        console.log(`[SW] Caching new resource: ${e.request.url}`);
-        cache.put(e.request, fetchedResponse.clone());
-        return fetchedResponse;
-      })()
-    );
-  }
-
-  if (url.pathname === "/api/readings/events") {
-    // TODO: handle SSE
-  }
-  if (url.pathname === "/api/readings/range") {
-    // TODO: handle api calls
-  }
-});
-
-// cleanup old unused caches
 self.addEventListener("activate", (e) => {
   console.log("[SW] Activating new service worker");
-  e.waitUntil(
-    (async () => {
-      const cacheNames = await caches.keys();
-      for (const selectedCacheName of cacheNames) {
-        if (selectedCacheName !== cacheName) {
-          console.log(`[SW] Deleting old cache: ${selectedCacheName}`);
-          caches.delete(selectedCacheName);
-        }
-      }
-    })()
-  );
 });

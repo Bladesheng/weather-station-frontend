@@ -1,5 +1,5 @@
 node_modules
-todo.txt
-
-dist
 package-lock.json
+todo.txt
+dist
+dev-dist

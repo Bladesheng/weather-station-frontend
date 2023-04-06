@@ -1,18 +1,19 @@
-import "@styles/style.scss";
-
-import "@assets/manifest.webmanifest";
-
-import "@assets/icons/favicons/favicon.ico";
-import "@assets/icons/favicons/apple-touch-icon.png";
+import "../styles/style.scss";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
 
 import App from "@components/App";
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-root.render(<App></App>);
+import { registerSW } from "virtual:pwa-register";
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js");
-}
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+root.render(<App />);
+
+registerSW({
+  immediate: true,
+
+  onOfflineReady() {
+    console.log("[SW] Offline version is ready");
+  },
+});
