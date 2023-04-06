@@ -20,6 +20,10 @@ $lineRed: rgb(242, 73, 92);
 $linePurple: rgb(184, 119, 217);
 $lineBlueDark: rgb(20, 58, 114);
 
+body {
+  background-color: $greyDark; // so you don't get flashbanged during loading
+}
+
 * {
   padding: 0;
   margin: 0;
