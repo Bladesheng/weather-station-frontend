@@ -1,4 +1,4 @@
-import { Storage } from "@utils/storage";
+import { Storage } from "@api/storage";
 
 export type IReading = {
   id: number;

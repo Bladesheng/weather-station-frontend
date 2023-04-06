@@ -1,17 +1,17 @@
-import { Storage } from "@utils/storage";
-
 import React, { useState, useEffect, useRef } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "@components/Navbar";
-import OverviewTab from "@components/OverviewTab";
-import HistoryTab from "@components/HistoryTab";
+
+import OverviewTab from "@pages/OverviewTab";
+import HistoryTab from "@pages/HistoryTab";
+import ForecastTab from "@pages/ForecastTab";
+
 import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
+import { Storage } from "@api/storage";
 import { fetchReadingsRange, IReading } from "@api/api";
-
-Storage.init();
 
 const initialReadings = await fetchReadingsRange();
 
@@ -105,7 +105,7 @@ export default function App() {
                 />
               }
             />
-            <Route path="predpoved" element={<h1>Předpověď WIP</h1>} />
+            <Route path="predpoved" element={<ForecastTab />} />
             <Route path="info" element={<h1>O meteostanici WIP</h1>} />
           </Routes>
         </main>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Storage } from "@utils/storage";
+import { Storage } from "@api/storage";
 
 import { fetchReadingsRange, IReading } from "@api/api";
 
