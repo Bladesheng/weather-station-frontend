@@ -4,11 +4,14 @@
     "paths": {
       /* Specify a set of entries that re-map imports to additional lookup locations. */
       "@api/*": ["api/*"],
+      "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
+      "@config/*": ["config/*"],
+      "@lib/*": ["lib/*"],
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"],
+      "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
-      "@assets/*": ["assets/*"],
       "@workers/*": ["workers/*"]
     }
   }

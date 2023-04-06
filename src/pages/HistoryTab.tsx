@@ -1,7 +1,7 @@
 import React from "react";
 
 import HistoryControls from "@components/HistoryControls";
-import ChartInteractive from "@components/ChartInteractive";
+import ChartInteractive from "@components/charts/ChartInteractive";
 import GenerateCsv from "@components/GenerateCsv";
 
 import { IReading } from "@api/api";

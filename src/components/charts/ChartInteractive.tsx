@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import { IReading } from "@api/api";
+import { Storage } from "@api/storage";
 
-import { Storage } from "@utils/storage";
-import { labelCb, titleCb } from "@utils/chart-tooltip-callbacks";
-import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
-import { CursorPositioner } from "@utils/chart-positioner-cursor";
-import { chartColors } from "@utils/colors";
+import { labelCb, titleCb } from "@lib/chart-tooltip-callbacks";
+import { ChartPluginCrosshair, CrosshairOptions } from "@lib/chart-plugin-crosshair";
+import { CursorPositioner } from "@lib/chart-positioner-cursor";
+
+import { chartColors } from "@config/colors";
 
 import {
   Chart as ChartJS,
@@ -22,6 +23,7 @@ import {
   ChartEvent,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
+import zoomPlugin from "chartjs-plugin-zoom";
 import { Line } from "react-chartjs-2";
 
 import { cs } from "date-fns/locale";
@@ -37,16 +39,17 @@ ChartJS.register(
 
   ChartPluginCrosshair,
   Legend,
-  Tooltip
+  Tooltip,
+  zoomPlugin
 );
 
 type IProps = {
-  readings: IReading[];
+  readingsHistory: IReading[];
 };
 
-export default function ReadingsChart(props: IProps) {
+export default function ChartInteractive(props: IProps) {
   const [datasetHidden, setDatasetHidden] = useState(Storage.datasetHidden);
-  const { readings } = props;
+  const readings = props.readingsHistory;
 
   useEffect(() => {
     // save visibility preferences in local storage
@@ -59,7 +62,6 @@ export default function ReadingsChart(props: IProps) {
       y: (reading.temperature_BMP + reading.temperature_DHT) / 2, // average value of the 2 sensors
     };
   });
-
   const readings_temperature_BMP = readings.map((reading) => {
     return {
       x: reading.createdAt,
@@ -78,6 +80,12 @@ export default function ReadingsChart(props: IProps) {
       y: reading.humidity_DHT,
     };
   });
+  const readings_pressure_BMP = readings.map((reading) => {
+    return {
+      x: reading.createdAt,
+      y: reading.pressure_BMP / 100, // unit conversion from Pa to hPa
+    };
+  });
 
   Tooltip.positioners.cursor = CursorPositioner;
 
@@ -89,8 +97,8 @@ export default function ReadingsChart(props: IProps) {
       x: {
         type: "time",
         time: {
-          displayFormats: { hour: "HH:mm" },
           minUnit: "hour",
+          displayFormats: { hour: "HH:mm" },
         },
         adapters: {
           date: {
@@ -122,6 +130,17 @@ export default function ReadingsChart(props: IProps) {
         title: {
           display: true,
           text: "Relativní vlhkost [%]",
+        },
+      },
+      y3: {
+        display: "auto",
+        grid: {
+          drawOnChartArea: false,
+        },
+        position: "right",
+        title: {
+          display: true,
+          text: "Tlak [hPa]",
         },
       },
     },
@@ -160,6 +179,39 @@ export default function ReadingsChart(props: IProps) {
         callbacks: {
           label: labelCb,
           title: titleCb,
+        },
+      },
+
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: "x",
+          modifierKey: "ctrl",
+        },
+
+        limits: {
+          x: {
+            min: "original",
+            max: "original",
+          },
+          y: {
+            min: "original",
+            max: "original",
+          },
+        },
+
+        zoom: {
+          mode: "x",
+          wheel: {
+            enabled: true,
+          },
+          drag: {
+            enabled: true,
+          },
+
+          pinch: {
+            enabled: true,
+          },
         },
       },
     },
@@ -223,6 +275,20 @@ export default function ReadingsChart(props: IProps) {
         pointHoverRadius: 5,
         pointHoverBackgroundColor: chartColors.lineBlue,
         pointHoverBorderColor: chartColors.lineBlue,
+      },
+      {
+        label: "Tlak",
+        data: readings_pressure_BMP,
+        yAxisID: "y3",
+        hidden: datasetHidden["Tlak"],
+
+        backgroundColor: chartColors.linePurple,
+        borderColor: chartColors.linePurple,
+
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: chartColors.linePurple,
+        pointHoverBorderColor: chartColors.linePurple,
       },
     ],
   };

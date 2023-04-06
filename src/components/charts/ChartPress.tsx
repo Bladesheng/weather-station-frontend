@@ -2,10 +2,11 @@ import React from "react";
 
 import { IReading } from "@api/api";
 
-import { labelCb, titleCb } from "@utils/chart-tooltip-callbacks";
-import { ChartPluginCrosshair, CrosshairOptions } from "@utils/chart-plugin-crosshair";
-import { CursorPositioner } from "@utils/chart-positioner-cursor";
-import { chartColors } from "@utils/colors";
+import { labelCb, titleCb } from "@lib/chart-tooltip-callbacks";
+import { ChartPluginCrosshair, CrosshairOptions } from "@lib/chart-plugin-crosshair";
+import { CursorPositioner } from "@lib/chart-positioner-cursor";
+
+import { chartColors } from "@config/colors";
 
 import {
   Chart as ChartJS,
