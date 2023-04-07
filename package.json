@@ -8,8 +8,11 @@
     "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "test": "vitest --color",
+    "coverage": "vitest run --coverage",
     "format": "prettier --ignore-path .eslintignore --write \"**/*.+(js|ts|tsx|json|html|scss)\"",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.jsx,.ts,.tsx ."
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.jsx,.ts,.tsx .",
+    "docker": "docker compose up"
   },
   "repository": {
     "type": "git",
@@ -43,6 +46,7 @@
     "typescript": "^4.9.4",
     "vite": "^4.2.1",
     "vite-plugin-pwa": "^0.14.7",
+    "vitest": "^0.29.8",
     "workbox-precaching": "^6.5.4"
   },
   "dependencies": {
