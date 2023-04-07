@@ -10,7 +10,7 @@ export function padDate(date: Date) {
 
   const dayOfMonth = padWithZeroes(date.getDate());
   const month = padWithZeroes(date.getMonth() + 1);
-  const year = date.getFullYear();
+  const year = String(date.getFullYear());
 
   return { hours, minutes, seconds, dayOfMonth, month, year };
 }
