@@ -1,12 +1,20 @@
 # This workflow automatically builds static files with Dockerfile and deploys them to GitHub Pages
 # whenever something is pushed / merged into main branch
 
-name: Pages build and deployment CI/CD
+name: GH Pages build and deployment
 
 on:
+  # this workflow will get triggered when pushing to main but also when merging PR
   push:
-    # this will trigger when pushing to main but also when merging PR
     branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   job-1:
