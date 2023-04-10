@@ -12,13 +12,13 @@ function useCountdown(targetDate: Date) {
 
   const [countdown, setCountdown] = useState(countdownTime - Date.now()); // time left
 
-  // update countdown time left every second
+  // start interval that will update remaining time every second
   useEffect(() => {
     const interval = setInterval(() => {
       setCountdown(countdownTime - Date.now());
     }, 1000);
 
-    return () => clearInterval(interval); // ????
+    return () => clearInterval(interval); // remove the interval when component leaves the screen
   }, [countdownTime]);
 
   let minutes = Math.floor((countdown % (1000 * 60 * 60)) / (1000 * 60));
@@ -34,7 +34,7 @@ export default function Countdown(props: IProps) {
   const [minutes, seconds] = useCountdown(props.targetDate);
 
   return (
-    <p className="countdown">
+    <p className="countdown" role="timer">
       {padWithZeroes(minutes)}:{padWithZeroes(seconds)}
     </p>
   );

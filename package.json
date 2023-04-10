@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/Bladesheng/weather-station-frontend#readme",
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
