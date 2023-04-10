@@ -9,7 +9,6 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest --color",
-    "coverage": "vitest run --coverage",
     "format": "prettier --ignore-path .eslintignore --write \"**/*.+(js|ts|tsx|json|html|scss)\"",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.jsx,.ts,.tsx .",
     "docker": "docker compose up"
@@ -39,6 +38,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.0",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdom": "^21.1.1",
     "prettier": "^2.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
