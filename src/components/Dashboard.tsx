@@ -6,10 +6,6 @@ import { IReading } from "@api/api";
 
 import { padDate } from "@utils/formatDate";
 
-type IProps = {
-  readings: IReading[];
-};
-
 // round the number to certain number of decimal places
 function round(originalNumber: number, decimalPlaces: number) {
   const x = 10 ** decimalPlaces;
@@ -32,6 +28,10 @@ function getAvgDelay(readings: IReading[]) {
 
   return avgDelay;
 }
+
+type IProps = {
+  readings: IReading[];
+};
 
 export default function Dashboard(props: IProps) {
   // if you don't have any readings available yet (probably because you are offline)
@@ -64,17 +64,17 @@ export default function Dashboard(props: IProps) {
     <section className="dashboard">
       <div className="widget">
         <h3>Aktuální teplota</h3>
-        <p>{round(temperature_avg, 1)} ˚C</p>
+        <p role="temperature">{round(temperature_avg, 1)} ˚C</p>
       </div>
 
       <div className="widget">
         <h3>Aktuální vlhkost</h3>
-        <p>{round(humidity_DHT, 0)} %</p>
+        <p role="humidity">{round(humidity_DHT, 0)} %</p>
       </div>
 
       <div className="widget">
         <h3>Poslední aktualizace</h3>
-        <p>
+        <p role="lastReadingDate">
           {hours}:{minutes} ({dayOfMonth}.{month}.{year})
         </p>
       </div>
@@ -86,7 +86,7 @@ export default function Dashboard(props: IProps) {
 
       <div className="widget">
         <h3>Min / max teplota (24 h)</h3>
-        <p>
+        <p role="minMaxTemp">
           {round(min, 1)} / {round(max, 1)} ˚C
         </p>
       </div>
