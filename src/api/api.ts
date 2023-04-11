@@ -12,7 +12,7 @@ export type IReading = {
   qualityId: number;
   quality: {
     id: number;
-    status: "string";
+    status: string;
   };
 };
 
