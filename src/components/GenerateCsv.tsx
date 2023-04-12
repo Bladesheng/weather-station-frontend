@@ -42,8 +42,8 @@ export default function GenerateCsv(props: IProps) {
     const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.setAttribute("href", url);
-    a.setAttribute("download", "data.csv");
+    a.href = url !== undefined ? url : "testUrl"; // because window.URL.createObjectURL() is not yet implemented in jsdom, so it will return undefined during testing
+    a.download = "data.csv";
     a.click(); // trigger the download
   }
 
