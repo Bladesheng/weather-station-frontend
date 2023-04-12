@@ -26,6 +26,7 @@
         "varsIgnorePattern": "seconds",
         "argsIgnorePattern": "e"
       }
-    ]
+    ],
+    "react-hooks/exhaustive-deps": "off"
   }
 }
