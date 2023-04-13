@@ -130,6 +130,9 @@ describe.concurrent("Dashboard suite", () => {
   });
 
   it("Should always display date of last reading", () => {
+    // to have the same output regardless of where or when you run the test
+    vi.spyOn(Date.prototype, "getHours").mockReturnValue(16);
+
     const { rerender } = render(<Dashboard readings={readingsStatic} />);
 
     expect(screen.getByRole("lastReadingDate").textContent).toEqual("16:45 (11.04.2023)");
