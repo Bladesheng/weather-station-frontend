@@ -9,6 +9,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest --color",
+    "testRun": "vitest run",
     "format": "prettier --ignore-path .eslintignore --write \"**/*.+(js|ts|tsx|json|html|scss)\"",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.jsx,.ts,.tsx .",
     "docker": "docker compose up"
