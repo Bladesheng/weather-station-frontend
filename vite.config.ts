@@ -10,7 +10,6 @@ import manifest from "./src/assets/manifest";
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
-
   build: {
     target: "ES2022",
     sourcemap: true,
@@ -29,13 +28,6 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
       "@workers": path.resolve(__dirname, "./src/workers"),
     },
-  },
-
-  server: {
-    port: 8000,
-  },
-  preview: {
-    port: 8000,
   },
 
   plugins: [
@@ -65,4 +57,13 @@ export default defineConfig({
       },
     }),
   ],
+
+  server: {
+    port: 8000,
+  },
+  preview: {
+    port: 8000,
+  },
+
+  clearScreen: false,
 });

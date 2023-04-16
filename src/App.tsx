@@ -37,14 +37,14 @@ export default function App() {
       // update current readings with newly received readings
       events.onmessage = (event) => {
         const newReading: IReading = JSON.parse(event.data);
-        newReading.createdAt = new Date(newReading.createdAt); // convert string (because json) to date object
-        console.log("new reading: ", newReading);
+        newReading.createdAt = new Date(newReading.createdAt); // string to date object
+        console.log("New reading: ", newReading);
 
         // ref is needed because this whole callback doesn't get updated when state changes
         // which means this callback can't acces updated state without using ref
         const readingsCopy = [...readingsRef.current];
 
-        // remove the last reading to not stretch out the chart too much
+        // remove the last reading to only keep readings from last 24 hours
         readingsCopy.pop();
 
         // update readings

@@ -12,7 +12,7 @@ export type IReading = {
   qualityId: number;
   quality: {
     id: number;
-    status: "string";
+    status: string;
   };
 };
 
@@ -37,7 +37,7 @@ export async function fetchReadingsRange(
     });
 
     if (!res.ok) {
-      throw new Error("Network response was not OK");
+      throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
     }
 
     readings = await res.json();

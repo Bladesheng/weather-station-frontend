@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   job-1:
-    name: Build
+    name: Build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -30,6 +30,9 @@ jobs:
 
       - name: Run the Docker image to build static files
         run: docker run --name builder-container builder-image
+
+      - name: Run tests in the container
+        run: docker compose -f docker-compose.test.yml up
 
       - name: Extract static files from the Docker container
         run: docker cp builder-container:/app/dist .
