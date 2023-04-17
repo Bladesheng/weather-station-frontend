@@ -12,7 +12,7 @@ Frontend web app used for displaying data collected by my weather station:
 - Clone the repository, then run dev server with:
 
 ```bash
-docker compose up -d
+npm run docker
 ```
 
 - The website will run at http://localhost:8000/
