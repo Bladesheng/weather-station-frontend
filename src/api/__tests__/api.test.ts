@@ -3,7 +3,7 @@
 
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { fetchReadingsRange } from "@api/api";
+import { fetchForecast, fetchReadingsRange } from "@api/api";
 
 describe.concurrent("fetchReadingsRange suite", () => {
   beforeAll(() => {
@@ -86,5 +86,87 @@ describe.concurrent("fetchReadingsRange suite", () => {
     const readings = await fetchReadingsRange();
 
     expect(readings).toEqual([]);
+  });
+});
+
+describe.concurrent("fetchForecast suite", () => {
+  beforeAll(() => {
+    // supress the console log
+    global.console.log = vi.fn();
+    global.console.warn = vi.fn();
+    global.console.error = vi.fn();
+  });
+
+  const responseMock = {
+    forecast: [
+      {
+        time: new Date().toISOString(),
+        data: {
+          instant: {
+            details: {
+              air_temperature: 7,
+            },
+          },
+        },
+      },
+    ],
+
+    sunrise: [
+      {
+        date: new Date().toISOString(),
+        sunrise: {
+          time: new Date().toISOString(),
+        },
+        sunset: {
+          time: new Date().toISOString(),
+        },
+      },
+    ],
+  };
+
+  it("Should return the mocked response", async () => {
+    global.fetch = vi.fn().mockImplementation(() => {
+      return Promise.resolve({
+        status: 200,
+        ok: true,
+        json: () => {
+          return Promise.resolve(structuredClone(responseMock));
+        },
+      });
+    });
+
+    const { forecast, sunrise } = await fetchForecast();
+
+    expect(forecast).not.toEqual(responseMock.forecast); // because dates were transformed
+    expect(sunrise).not.toEqual(responseMock.sunrise);
+
+    expect(forecast[0].data.instant.details.air_temperature).toEqual(7);
+  });
+
+  it("Should return empty array if there is network error", async () => {
+    global.fetch = vi.fn().mockImplementation(() => {
+      throw "net::ERR_INTERNET_DISCONNECTED";
+    });
+
+    const { forecast, sunrise } = await fetchForecast();
+
+    expect(forecast).toEqual([]);
+    expect(sunrise).toEqual([]);
+  });
+
+  it("Should return empty array if there is server error", async () => {
+    global.fetch = vi.fn().mockImplementation(() => {
+      return Promise.resolve({
+        status: 404,
+        statusText: "Not found",
+        ok: false,
+        json: "rip",
+      });
+    });
+
+    const { forecast, sunrise } = await fetchForecast();
+
+    expect(forecast).toEqual([]);
+    expect(sunrise).toEqual([]);
   });
 });
