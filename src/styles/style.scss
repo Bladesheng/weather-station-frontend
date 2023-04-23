@@ -236,6 +236,14 @@ main {
       border-radius: 2px;
     }
   }
+
+  .forecastTab {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 }
 
 .offlinePopup {
