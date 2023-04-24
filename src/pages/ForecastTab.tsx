@@ -18,15 +18,11 @@ export default function HistoryTab() {
     })();
   }, []);
 
-  // if (forecast.length === 0) {
-  //   return <h1>Načítání...</h1>;
-  // }
-
   return (
     <section className="forecastTab">
-      <h1>Předpověď WIP</h1>
-
-      <ChartForecast forecast={forecast} />
+      <div className="chartDiv">
+        <ChartForecast forecast={forecast} />
+      </div>
     </section>
   );
 }

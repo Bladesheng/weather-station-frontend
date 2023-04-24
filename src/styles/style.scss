@@ -243,6 +243,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 4px;
+
+    .chartDiv {
+      flex: 1 1 auto;
+    }
   }
 }
 

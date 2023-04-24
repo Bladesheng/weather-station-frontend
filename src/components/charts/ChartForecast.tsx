@@ -97,6 +97,7 @@ export default function ChartForecast(props: IProps) {
           },
         },
 
+        offset: false, // no extra whitespace at start and end of x axis
         grid: {
           color: chartColors.greyBorder,
         },
