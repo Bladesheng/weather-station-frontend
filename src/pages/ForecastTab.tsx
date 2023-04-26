@@ -5,6 +5,8 @@ import { IForecast, ISunrise } from "@api/api";
 
 import ChartForecast from "@components/charts/ChartForecast";
 
+import ForecastTable from "@components/ForecastTable";
+
 export default function HistoryTab() {
   const [forecast, setForecast] = useState<IForecast[]>([]);
   const [sunrise, setSunrise] = useState<ISunrise[]>([]);
@@ -23,6 +25,8 @@ export default function HistoryTab() {
       <div className="chartDiv">
         <ChartForecast forecast={forecast} />
       </div>
+
+      <ForecastTable forecast={forecast} sunrise={sunrise} />
     </section>
   );
 }

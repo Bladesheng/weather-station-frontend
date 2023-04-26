@@ -153,8 +153,9 @@ main {
     gap: 8px;
 
     .dashboard {
-      display: flex;
       flex: 0 1 auto;
+
+      display: flex;
       flex-wrap: wrap;
 
       gap: 8px;
@@ -186,6 +187,7 @@ main {
 
     .charts {
       flex: 1 1 auto;
+
       display: grid;
       grid-template-columns: 1fr 0.6fr;
       grid-template-rows: 1fr;
@@ -246,6 +248,29 @@ main {
 
     .chartDiv {
       flex: 1 1 auto;
+      min-height: 30vh;
+    }
+
+    .forecastTable {
+      flex: 0 1 auto;
+
+      display: flex;
+      flex-wrap: wrap;
+
+      .precipitation {
+        color: $fontBlue;
+      }
+
+      .weatherIcon {
+        height: 2rem;
+      }
+      .sunrise {
+        height: 2rem;
+
+        // https://codepen.io/sosuke/pen/Pjoqqp
+        filter: invert(99%) sepia(1%) saturate(2248%) hue-rotate(162deg) brightness(96%)
+          contrast(80%);
+      }
     }
   }
 }
