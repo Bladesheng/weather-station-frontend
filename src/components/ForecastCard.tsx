@@ -45,15 +45,21 @@ export default function ForecastCard(props: IProps) {
 
     return (
       <tr key={index}>
-        <td>{hoursText}</td>
+        <td role="hours">{hoursText}</td>
         <td className="icon">
-          <img className="weatherIcon" src={`./icons/weathericons/${iconCode}.svg`} />
+          <img
+            role="weatherIcon"
+            className="weatherIcon"
+            src={`./icons/weathericons/${iconCode}.svg`}
+          />
         </td>
-        <td className="temperature">
+        <td role="temperature" className="temperature">
           {`${Math.round(timePoint.data.instant.details.air_temperature)}˚`}
         </td>
-        <td className="precipitation">{precipitation === 0 ? "" : precipitation}</td>
-        <td>{Math.round(timePoint.data.instant.details.cloud_area_fraction)}</td>
+        <td role="precipitation" className="precipitation">
+          {precipitation === 0 ? "" : precipitation}
+        </td>
+        <td role="cloud">{Math.round(timePoint.data.instant.details.cloud_area_fraction)}</td>
       </tr>
     );
   });
@@ -72,10 +78,10 @@ export default function ForecastCard(props: IProps) {
   }
 
   return (
-    <div className="forecastCard">
+    <div role="forecastCard" className="forecastCard">
       <h2>{`${dayNames[props.day[0].time.getDay()]} ${props.day[0].time.getDate()}.${
         props.day[0].time.getMonth() + 1
-      }`}</h2>
+      }.`}</h2>
 
       <table>
         <thead>
@@ -95,12 +101,12 @@ export default function ForecastCard(props: IProps) {
           <div>
             <p>Východ</p>
             <img className="sunriseIcon" src="./icons/sunrise.svg" />
-            <span>{sunrise}</span>
+            <span role="sunriseTime">{sunrise}</span>
           </div>
           <div>
             <p>Západ</p>
             <img className="sunriseIcon" src="./icons/sunset.svg" />
-            <span>{sunset}</span>
+            <span role="sunsetTime">{sunset}</span>
           </div>
         </div>
       )}
