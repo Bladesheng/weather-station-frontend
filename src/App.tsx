@@ -106,12 +106,19 @@ export default function App() {
               }
             />
             <Route path="predpoved" element={<ForecastTab />} />
-            <Route path="info" element={<h1>O meteostanici WIP</h1>} />
+            <Route
+              path="info"
+              element={
+                <h1>
+                  WIP
+                  <Footer />
+                </h1>
+              }
+            />
           </Routes>
         </main>
 
         <OfflinePopup isOnline={isOnline} />
-        <Footer />
       </div>
     </HashRouter>
   );
