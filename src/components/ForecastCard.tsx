@@ -40,17 +40,17 @@ export default function ForecastCard(props: IProps) {
       }
       const hoursEnd = padWithZeroes(hours + 6);
 
-      hoursText = `${hoursStart}-${hoursEnd}`;
+      hoursText = `${hoursStart}—${hoursEnd}`;
     }
 
     return (
       <tr key={index}>
         <td>{hoursText}</td>
-        <td className="temperature">
-          {Math.round(timePoint.data.instant.details.air_temperature)}
-        </td>
-        <td>
+        <td className="icon">
           <img className="weatherIcon" src={`./icons/weathericons/${iconCode}.svg`} />
+        </td>
+        <td className="temperature">
+          {`${Math.round(timePoint.data.instant.details.air_temperature)}˚`}
         </td>
         <td className="precipitation">{precipitation === 0 ? "" : precipitation}</td>
         <td>{Math.round(timePoint.data.instant.details.cloud_area_fraction)}</td>
@@ -73,17 +73,17 @@ export default function ForecastCard(props: IProps) {
 
   return (
     <div className="forecastCard">
-      <p>{`${dayNames[props.day[0].time.getDay()]} ${props.day[0].time.getDate()}.${
+      <h2>{`${dayNames[props.day[0].time.getDay()]} ${props.day[0].time.getDate()}.${
         props.day[0].time.getMonth() + 1
-      }`}</p>
+      }`}</h2>
 
       <table>
         <thead>
           <tr>
             <td>Čas</td>
-            <td>Teplota [˚C]</td>
             <td></td>
-            <td>Srážky [mm]</td>
+            <td>Teplota</td>
+            <td>Srážky</td>
             <td>Oblačnost [%]</td>
           </tr>
         </thead>
@@ -92,10 +92,16 @@ export default function ForecastCard(props: IProps) {
 
       {props.sunrise !== undefined && (
         <div className="sunriseSunset">
-          <img className="sunrise" src="./icons/sunrise.svg" />
-          <p>{sunrise}</p>
-          <img className="sunrise" src="./icons/sunset.svg" />
-          <p>{sunset}</p>
+          <div>
+            <p>Východ</p>
+            <img className="sunriseIcon" src="./icons/sunrise.svg" />
+            <span>{sunrise}</span>
+          </div>
+          <div>
+            <p>Západ</p>
+            <img className="sunriseIcon" src="./icons/sunset.svg" />
+            <span>{sunset}</span>
+          </div>
         </div>
       )}
     </div>
