@@ -114,6 +114,28 @@ canvas {
   // https://github.com/chartjs/Chart.js/issues/9001
 }
 
+// scrollbar
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(170, 170, 170);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(110, 110, 110);
+}
+* {
+  // firefox only
+  scrollbar-color: rgb(170, 170, 170) transparent;
+}
+
 //
 
 nav {
@@ -139,11 +161,17 @@ nav {
   }
 }
 
+main > * {
+  padding-bottom: 16px;
+}
+
 main {
   flex: 1 1 auto;
 
   display: flex;
   padding: 0 16px;
+
+  min-height: 1px; // this allows you to enable scrolling in child elements
 
   .overviewTab {
     flex: 1 1 auto;
@@ -153,15 +181,17 @@ main {
     gap: 8px;
 
     .dashboard {
-      display: flex;
       flex: 0 1 auto;
+
+      display: flex;
       flex-wrap: wrap;
 
       gap: 8px;
 
       .widget {
-        display: flex;
         flex: 1 1 0;
+
+        display: flex;
         flex-direction: column;
         align-items: center;
         padding: 6px;
@@ -186,6 +216,7 @@ main {
 
     .charts {
       flex: 1 1 auto;
+
       display: grid;
       grid-template-columns: 1fr 0.6fr;
       grid-template-rows: 1fr;
@@ -234,6 +265,103 @@ main {
 
       border: 1px solid $greyBorder;
       border-radius: 2px;
+    }
+  }
+
+  .forecastTab {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .chartDiv {
+      flex: 1 1 auto;
+      min-height: 30vh;
+    }
+
+    .forecastTable {
+      flex: 0 1 auto;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+
+      .forecastCard {
+        height: fit-content;
+        padding: 16px;
+
+        background-color: $greyLight;
+
+        border: 1px solid $greyBorder;
+        border-radius: 3px;
+
+        h2 {
+          margin-bottom: 8px;
+
+          font-weight: 500;
+          font-size: 1rem;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+
+          td {
+            padding: 2px 0;
+            text-align: center;
+          }
+
+          tbody {
+            tr {
+              border-bottom: 1px solid rgb(50, 50, 50);
+            }
+          }
+
+          td.icon {
+            // center the icon
+            display: flex;
+            justify-content: center;
+          }
+          .weatherIcon {
+            height: 2rem;
+          }
+
+          .temperature {
+            color: $lineRed;
+          }
+          .precipitation {
+            color: $fontBlue;
+          }
+        }
+
+        .sunriseSunset {
+          display: flex;
+          justify-content: space-around;
+          padding-top: 16px;
+
+          div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+
+            text-align: center;
+
+            p {
+              grid-column: 1 / 3;
+            }
+
+            .sunriseIcon {
+              height: 2rem;
+
+              // https://codepen.io/sosuke/pen/Pjoqqp
+              filter: invert(99%) sepia(1%) saturate(2248%) hue-rotate(162deg) brightness(96%)
+                contrast(80%);
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -286,6 +414,6 @@ footer {
 
 @media screen and (max-height: 600px) {
   .chartDiv {
-    min-height: 300px; // for mobile landscape mode
+    min-height: 300px !important; // for mobile landscape mode
   }
 }

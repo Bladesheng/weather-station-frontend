@@ -17,7 +17,7 @@ export function labelCb(context: TooltipItem<"line">) {
     //   currency: "USD",
     // }).format(context.parsed.y);
 
-    label += context.parsed.y.toFixed(2); // the numeric value itself. 2 decimal positions
+    label += context.parsed.y.toFixed(1); // the numeric value itself. 2 decimal positions
 
     switch (datasetName) {
       case "Teplota":
@@ -30,6 +30,9 @@ export function labelCb(context: TooltipItem<"line">) {
         break;
       case "Tlak":
         label += " hPa";
+        break;
+      case "Srážky":
+        label += " mm";
         break;
     }
   }
