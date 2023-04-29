@@ -114,6 +114,28 @@ canvas {
   // https://github.com/chartjs/Chart.js/issues/9001
 }
 
+// scrollbar
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(170, 170, 170);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(110, 110, 110);
+}
+* {
+  // firefox only
+  scrollbar-color: rgb(170, 170, 170) transparent;
+}
+
 //
 
 nav {
@@ -144,6 +166,8 @@ main {
 
   display: flex;
   padding: 0 16px;
+
+  min-height: 1px; // this allows you to enable scrolling in child elements
 
   .overviewTab {
     flex: 1 1 auto;
@@ -241,6 +265,7 @@ main {
 
   .forecastTab {
     flex: 1 1 auto;
+    overflow-y: scroll;
 
     display: flex;
     flex-direction: column;
