@@ -27,6 +27,11 @@ export default function HistoryTab() {
       </div>
 
       <ForecastTable forecast={forecast} sunrise={sunrise} />
+
+      <footer className="footer">
+        <span>Zdroj dat pro předpověď: </span>
+        <a href="https://api.met.no/">Met.no API</a>
+      </footer>
     </section>
   );
 }
