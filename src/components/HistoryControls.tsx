@@ -35,7 +35,7 @@ function monthDiff(dateFrom: Date, dateTo: Date) {
   );
 }
 
-const dateFrom = new Date("2022-07-02T20:00:00.000Z"); // date of first reading ever
+export const dateFrom = new Date("2022-07-02T20:00:00.000Z"); // date of first reading ever
 const dateTo = new Date(); // up to now
 const numberOfMonths = monthDiff(dateFrom, dateTo);
 
@@ -98,7 +98,7 @@ export default function HistoryControls(props: IProps) {
   }
 
   async function handleSelectChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    if (e.target.value === "none") return;
+    if (e.target.value === "none") return; // the first preselected option
 
     const howManyMonthsAgo = parseInt(e.target.value);
 
