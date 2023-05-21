@@ -238,6 +238,26 @@ main {
       flex-wrap: wrap;
       gap: 4px;
 
+      .monthSelection {
+        display: flex;
+        align-items: center;
+
+        p {
+          margin-left: 1rem;
+        }
+        select {
+          padding: 7px;
+
+          background-color: $greyLight;
+
+          color: $fontWhite;
+          font-family: $font-stack;
+
+          border: 1px solid $greyBorder;
+          border-radius: 2px;
+        }
+      }
+
       button {
         @extend %button-standard;
 
