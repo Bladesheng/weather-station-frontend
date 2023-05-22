@@ -1,7 +1,65 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;500;700&display=swap");
+// https://gwfh.mranftl.com/fonts/roboto?subsets=latin
+
+/* roboto-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/roboto-v30-latin-regular.woff2") format("woff2"),
+    /* Chrome 36+, Opera 23+, Firefox 39+ */ url("/fonts/roboto-v30-latin-regular.woff")
+      format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/fonts/roboto-v30-latin-italic.woff2") format("woff2"),
+    /* Chrome 36+, Opera 23+, Firefox 39+ */ url("/fonts/roboto-v30-latin-italic.woff")
+      format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-500 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/roboto-v30-latin-500.woff2") format("woff2"),
+    /* Chrome 36+, Opera 23+, Firefox 39+ */ url("/fonts/roboto-v30-latin-500.woff") format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-500italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 500;
+  src: url("/fonts/roboto-v30-latin-500italic.woff2") format("woff2"),
+    /* Chrome 36+, Opera 23+, Firefox 39+ */ url("/fonts/roboto-v30-latin-500italic.woff")
+      format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/roboto-v30-latin-700.woff2") format("woff2"),
+    /* Chrome 36+, Opera 23+, Firefox 39+ */ url("/fonts/roboto-v30-latin-700.woff") format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-700italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 700;
+  src: url("/fonts/roboto-v30-latin-700italic.woff2") format("woff2"),
+    /* Chrome 36+, Opera 23+, Firefox 39+ */ url("/fonts/roboto-v30-latin-700italic.woff")
+      format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 
 $font-stack: "Roboto", sans-serif;
-$font-stack-mono: "Roboto Mono", monospace;
 
 $greyLight: rgb(24, 27, 31);
 $greyDark: rgb(17, 18, 23);
