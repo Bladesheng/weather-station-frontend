@@ -5,7 +5,7 @@ import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 
-import HistoryControls from "@components/HistoryControls";
+import HistoryControls, { dateFrom } from "@components/HistoryControls";
 
 describe.concurrent("HistoryControls suite", () => {
   afterEach(() => {
@@ -50,5 +50,37 @@ describe.concurrent("HistoryControls suite", () => {
 
     const setter = Object.getOwnPropertyDescriptor(storage.Storage, "lastRange")?.set;
     expect(setter).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should create dropdown options for previous month and first month ever", () => {
+    const setReadingsHistoryMock = vi.fn();
+    render(<HistoryControls readingsHistory={[]} setReadingsHistory={setReadingsHistoryMock} />);
+
+    const monthsDropdown: HTMLSelectElement = screen.getByRole("combobox");
+
+    const monthNames = [
+      "Leden",
+      "Únor",
+      "Březen",
+      "Duben",
+      "Květen",
+      "Červen",
+      "Červenec",
+      "Srpen",
+      "Září",
+      "Říjen",
+      "Listopad",
+      "Prosinec",
+    ];
+
+    const previousMonth = monthNames[new Date().getMonth() - 1];
+    const currentYear = new Date().getFullYear();
+
+    const firstReadingDate = new Date(dateFrom);
+    const firstMonth = monthNames[firstReadingDate.getMonth()];
+    const firstYear = firstReadingDate.getFullYear();
+
+    expect(monthsDropdown.textContent).to.contain(`${previousMonth} ${currentYear}`);
+    expect(monthsDropdown.textContent).to.contain(`${firstMonth} ${firstYear}`);
   });
 });
