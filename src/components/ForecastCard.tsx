@@ -90,7 +90,7 @@ export default function ForecastCard(props: IProps) {
             <td></td>
             <td>Teplota</td>
             <td>Srážky</td>
-            <td>Oblačnost [%]</td>
+            <td>Oblačnost (%)</td>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
