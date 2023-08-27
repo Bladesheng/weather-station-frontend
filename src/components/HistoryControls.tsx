@@ -143,11 +143,6 @@ export default function HistoryControls(props: IProps) {
 
         // gotta make something up, so that typescript is happy
         id: 1,
-        qualityId: 1,
-        quality: {
-          id: 1,
-          status: "1",
-        },
       };
     });
 

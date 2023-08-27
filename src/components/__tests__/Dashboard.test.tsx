@@ -22,11 +22,6 @@ describe.concurrent("Dashboard suite", () => {
       humidity_DHT: 56.123,
       id: 23,
       pressure_BMP: 98874.456,
-      quality: {
-        id: 2,
-        status: "normal",
-      },
-      qualityId: 2,
       temperature_BMP: 22.00654,
       temperature_DHT: 22,
     },
@@ -35,11 +30,6 @@ describe.concurrent("Dashboard suite", () => {
       humidity_DHT: 52.123,
       id: 22,
       pressure_BMP: 97874.456,
-      quality: {
-        id: 2,
-        status: "normal",
-      },
-      qualityId: 2,
       temperature_BMP: 23.00654,
       temperature_DHT: 23,
     },
@@ -48,11 +38,6 @@ describe.concurrent("Dashboard suite", () => {
       humidity_DHT: 54.123,
       id: 21,
       pressure_BMP: 99874.456,
-      quality: {
-        id: 2,
-        status: "normal",
-      },
-      qualityId: 2,
       temperature_BMP: 21.00654,
       temperature_DHT: 21,
     },
@@ -62,11 +47,6 @@ describe.concurrent("Dashboard suite", () => {
     humidity_DHT: 62.123,
     id: 23,
     pressure_BMP: 94874.456,
-    quality: {
-      id: 2,
-      status: "normal",
-    },
-    qualityId: 2,
     temperature_BMP: 19.00654,
     temperature_DHT: 19,
   };
@@ -77,11 +57,6 @@ describe.concurrent("Dashboard suite", () => {
       humidity_DHT: 56.123,
       id: 23,
       pressure_BMP: 98874.456,
-      quality: {
-        id: 2,
-        status: "normal",
-      },
-      qualityId: 2,
       temperature_BMP: 22.00654,
       temperature_DHT: 22,
     },
@@ -90,11 +65,6 @@ describe.concurrent("Dashboard suite", () => {
       humidity_DHT: 57.123,
       id: 22,
       pressure_BMP: 97874.456,
-      quality: {
-        id: 2,
-        status: "normal",
-      },
-      qualityId: 2,
       temperature_BMP: 21.00654,
       temperature_DHT: 21,
     },
@@ -104,11 +74,6 @@ describe.concurrent("Dashboard suite", () => {
     humidity_DHT: 62.123,
     id: 23,
     pressure_BMP: 94874.456,
-    quality: {
-      id: 2,
-      status: "normal",
-    },
-    qualityId: 2,
     temperature_BMP: 19.00654,
     temperature_DHT: 19,
   };
