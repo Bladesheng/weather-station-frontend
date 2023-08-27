@@ -11,9 +11,9 @@ import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
 import { Storage } from "@api/storage";
-import { fetchReadingsRange, IReading } from "@api/api";
+import { fetchLast24h, IReading } from "@api/api";
 
-const initialReadings = await fetchReadingsRange();
+const initialReadings = await fetchLast24h();
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -69,7 +69,7 @@ export default function App() {
 
       // Fetch latest readings after reconnecting to a network
       setTimeout(async () => {
-        setReadings(await fetchReadingsRange());
+        setReadings(await fetchLast24h());
         // Timeout is used because sometimes, the request is sent too fast after reconnecting to a network,
         // the DNS fails to resolve and as a result, the request for new readings also fails
         // (This could possibly be only VirtualBox issue, but better to be safe)

@@ -23,11 +23,6 @@ describe.concurrent("GenerateCsv suite", () => {
       humidity_DHT: 56.123,
       id: 23,
       pressure_BMP: 98874.456,
-      quality: {
-        id: 2,
-        status: "normal",
-      },
-      qualityId: 2,
       temperature_BMP: 22.00654,
       temperature_DHT: 22,
     },

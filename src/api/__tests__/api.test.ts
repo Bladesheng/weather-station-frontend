@@ -23,11 +23,6 @@ describe.concurrent("fetchReadingsRange suite", () => {
       humidity_DHT: 54.123,
       id: 21,
       pressure_BMP: 99874.456,
-      quality: {
-        id: 2,
-        status: "normal",
-      },
-      qualityId: 2,
       temperature_BMP: 22.00654,
       temperature_DHT: 22,
     },
