@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
-
+import { subMonths } from "date-fns";
 import { Storage } from "@api/storage";
-
-import { fetchReadingsRange, IReading } from "@api/api";
+import { fetchReadingsRange, fetchMonth } from "@api/api";
+import type { IReading } from "@api/api";
 import { largestTriangleThreeBuckets } from "@utils/lttb";
 
-const buttonTimes = {
+const BUTTON_TIMES = {
   "12 hodin": 12 * 60 * 60 * 1000,
   "24 hodin": 24 * 60 * 60 * 1000,
   "2 dny": 2 * 24 * 60 * 60 * 1000,
   "7 dní": 7 * 24 * 60 * 60 * 1000,
-  "30 dní": 30 * 24 * 60 * 60 * 1000,
 };
 
-const monthNames = [
+const MONTH_NAMES = [
   "Leden",
   "Únor",
   "Březen",
@@ -28,39 +27,31 @@ const monthNames = [
   "Prosinec",
 ];
 
-// how many months are there between 2 dates
+/**
+ * Returns how many months are there between 2 dates
+ */
 function monthDiff(dateFrom: Date, dateTo: Date) {
   return (
     dateTo.getMonth() - dateFrom.getMonth() + 12 * (dateTo.getFullYear() - dateFrom.getFullYear())
   );
 }
 
-export const dateFrom = new Date("2022-07-02T20:00:00.000Z"); // date of first reading ever
-const dateTo = new Date(); // up to now
-const numberOfMonths = monthDiff(dateFrom, dateTo);
-
-// array of first and last dates of each month
-const firstLastDates: Date[][] = [];
-for (let i = 0; i < numberOfMonths; i++) {
-  const firstDay = new Date();
-  firstDay.setMonth(new Date().getMonth() - i - 1);
-  firstDay.setDate(1); // first day of that month
-
-  const lastDay = new Date(firstDay);
-  lastDay.setMonth(firstDay.getMonth() + 1); // the next month
-  lastDay.setDate(0); // 0 will allways give you last day of the previous month
-
-  firstLastDates[i] = [firstDay, lastDay];
+export const FIRST_READING_EVER = new Date("2022-07-02T20:00:00.000Z");
+const numberOfMonths = monthDiff(FIRST_READING_EVER, new Date());
+// array of months between now and first reading ever
+const months: Date[] = [];
+for (let i = 0; i <= numberOfMonths; i++) {
+  const lastMonthDate = subMonths(new Date(), i);
+  months[i] = lastMonthDate;
 }
 
-const options = firstLastDates.map((firstAndLastDay, index) => {
-  const firstDay = firstAndLastDay[0];
-
-  const monthName = monthNames[firstDay.getMonth()];
-  const year = firstDay.getFullYear();
+const options = months.map((date, index) => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const monthName = MONTH_NAMES[month];
 
   return (
-    <option value={index} key={index}>
+    <option value={`${year}-${month + 1}`} key={index}>
       {`${monthName} ${year}`}
     </option>
   );
@@ -74,39 +65,32 @@ type IProps = {
 export default function HistoryControls(props: IProps) {
   useEffect(() => {
     // on component init: if there is no readings yet and something was already selected last time: select it again
-    if (props.readingsHistory.length === 0 && Storage.lastRange !== "") {
-      const rangeName = Storage.lastRange as keyof typeof buttonTimes;
-      selectRange(rangeName);
+    if (props.readingsHistory.length === 0 && Storage.lastRange !== 0) {
+      selectRange(Storage.lastRange);
     }
   }, []);
 
-  // fetch readings for give rangeName, update state to display them on chart and remember the last selection (with localStorage)
-  async function selectRange(rangeName: keyof typeof buttonTimes) {
-    const startTime = buttonTimes[rangeName];
+  /**
+   * Display readings from given time untill now
+   */
+  async function selectRange(startTime: number) {
     const readings = await fetchReadingsRange(new Date(Date.now() - startTime));
 
     props.setReadingsHistory(readings);
 
-    Storage.lastRange = rangeName; // remember the last selection to load it when you refresh page
+    // remember the last selection to load it when you refresh page
+    Storage.lastRange = startTime;
   }
 
-  async function clickSelectRange(e: React.MouseEvent) {
-    const clickedButton = e.target as HTMLButtonElement;
-    const buttonText = clickedButton.textContent as keyof typeof buttonTimes;
-
-    selectRange(buttonText);
-  }
-
+  /**
+   * Display readings from selected month
+   */
   async function handleSelectChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    if (e.target.value === "none") return; // the first preselected option
+    if (e.currentTarget.value === "none") return; // the first preselected option
 
-    const howManyMonthsAgo = parseInt(e.target.value);
+    const [year, month] = e.currentTarget.value.split("-");
 
-    // first day and last day of the selected month
-    const endDate = firstLastDates[howManyMonthsAgo][0];
-    const startDate = firstLastDates[howManyMonthsAgo][1];
-
-    const readings = await fetchReadingsRange(endDate, startDate);
+    const readings = await fetchMonth(year, month);
 
     // lttb downsampling requires arrays of x and y value
     const temperatureInputs = readings.map((reading) => {
@@ -151,21 +135,25 @@ export default function HistoryControls(props: IProps) {
     props.setReadingsHistory(newReadings);
   }
 
-  // create button for each range entry in buttonTimes
-  const buttonElements: JSX.Element[] = [];
-  for (const buttonText in buttonTimes) {
-    buttonElements.push(
-      <button onClick={clickSelectRange} key={buttonText}>
+  // create button for each range entry in BUTTON_TIMES
+  const buttonElements = Object.entries(BUTTON_TIMES).map<JSX.Element>(([buttonText, time]) => {
+    return (
+      <button
+        onClick={() => {
+          selectRange(time);
+        }}
+        key={buttonText}
+      >
         {buttonText}
       </button>
     );
-  }
+  });
 
   return (
     <section className="historyControls">
       {buttonElements}
       <div className="monthSelection">
-        <p>Historická data:ㅤ</p>
+        <p>Historická data:&nbsp;</p>
         <select onChange={handleSelectChange}>
           <option value="none">--Vyberte měsíc--</option>
           {options}

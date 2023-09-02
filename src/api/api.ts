@@ -65,6 +65,8 @@ export type ISunrise = {
   solarnoon: object;
 };
 
+const API_URL = "https://weather-station-backend.fly.dev";
+
 export async function fetchReadingsRange(
   start = new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // from 24 hours ago (miliseconds)
   end = new Date() // up until now
@@ -72,10 +74,9 @@ export async function fetchReadingsRange(
   // DEVEL
   //start = new Date("2022-11-27T12:30");
   //end = new Date("2022-11-28T12:30");
-  //const domain = "localhost:8080";
+  //const API_URL = "localhost:8080";
 
-  const domain = "weather-station-backend.fly.dev";
-  const url = `https://${domain}/api/readings/range?start=${start.toISOString()}&end=${end.toISOString()}`;
+  const url = `${API_URL}/api/readings/range?start=${start.toISOString()}&end=${end.toISOString()}`;
 
   let readings: IReading[] = [];
   try {
@@ -105,8 +106,7 @@ export async function fetchReadingsRange(
 }
 
 export async function fetchLast24h() {
-  const domain = "weather-station-backend.fly.dev";
-  const url = `https://${domain}/api/readings/24h`;
+  const url = `${API_URL}/api/readings/24h`;
 
   let readings: IReading[] = [];
   try {
@@ -135,10 +135,35 @@ export async function fetchLast24h() {
   return readings;
 }
 
+export async function fetchMonth(year: number | string, month: number | string) {
+  const url = `${API_URL}/api/readings/month?year=${year}&month=${month}`;
+
+  let readings: IReading[] = [];
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+    }
+
+    readings = await res.json();
+  } catch (error) {
+    console.warn("There has been a network error with fetch request: ", error);
+  }
+
+  // convert date strings to date objects
+  for (const reading of readings) {
+    reading.createdAt = new Date(reading.createdAt);
+  }
+
+  console.log("Readings: ", readings);
+  return readings;
+}
+
 export async function fetchForecast() {
-  const domain = "weather-station-backend.fly.dev";
-  //const domain = "localhost:8080";
-  const url = `https://${domain}/api/forecast`;
+  const url = `${API_URL}/api/forecast`;
 
   let forecast: IForecast[] = [];
   let sunrise: ISunrise[] = [];

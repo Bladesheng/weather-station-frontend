@@ -11,11 +11,11 @@ services:
     tty: true # to enable colored output
     command: npm run dev
 
-  tests:
-    build: .
-    working_dir: /app
-    volumes:
-      - ./:/app
-    environment:
-      NODE_ENV: dev
-    command: npm run test
+  # tests:
+  #   build: .
+  #   working_dir: /app
+  #   volumes:
+  #     - ./:/app
+  #   environment:
+  #     NODE_ENV: dev
+  #   command: npm run test
