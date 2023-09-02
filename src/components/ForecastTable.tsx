@@ -1,6 +1,5 @@
 import React from "react";
 
-import { IForecast, ISunrise } from "@api/api";
 import ForecastCard from "./ForecastCard";
 
 type IProps = {

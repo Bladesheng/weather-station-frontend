@@ -1,5 +1,3 @@
-import { IReading } from "@api/api";
-
 // Module for interfacing with Local Storage API
 export const Storage = (() => {
   type IdatasetHidden = {

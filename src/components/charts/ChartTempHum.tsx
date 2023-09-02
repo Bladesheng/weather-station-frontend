@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { IReading } from "@api/api";
 import { Storage } from "@api/storage";
 
 import { labelCb, titleCb } from "@lib/chart-tooltip-callbacks";

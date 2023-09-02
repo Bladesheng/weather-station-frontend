@@ -11,7 +11,7 @@ import OfflinePopup from "@components/OfflinePopup";
 import Footer from "@components/Footer";
 
 import { Storage } from "@api/storage";
-import { fetchLast24h, IReading } from "@api/api";
+import { fetchLast24h } from "@api/api";
 
 const initialReadings = await fetchLast24h();
 

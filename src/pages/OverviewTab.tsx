@@ -1,7 +1,5 @@
 import React from "react";
 
-import { IReading } from "@api/api";
-
 import Dashboard from "@components/Dashboard";
 import ChartTempHum from "@components/charts/ChartTempHum";
 import ChartPress from "@components/charts/ChartPress";

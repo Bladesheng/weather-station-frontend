@@ -1,7 +1,5 @@
 import React from "react";
 
-import { IForecast } from "@api/api";
-
 import { labelCb, titleCb } from "@lib/chart-tooltip-callbacks";
 import { ChartPluginCrosshair, CrosshairOptions } from "@lib/chart-plugin-crosshair";
 import { CursorPositioner } from "@lib/chart-positioner-cursor";

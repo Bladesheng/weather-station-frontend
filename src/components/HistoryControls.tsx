@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { subMonths } from "date-fns";
 import { Storage } from "@api/storage";
 import { fetchReadingsRange, fetchMonth } from "@api/api";
-import type { IReading } from "@api/api";
 import { largestTriangleThreeBuckets } from "@utils/lttb";
 
 const BUTTON_TIMES = {

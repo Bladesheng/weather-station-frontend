@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { fetchForecast } from "@api/api";
-import { IForecast, ISunrise } from "@api/api";
 
 import ChartForecast from "@components/charts/ChartForecast";
 

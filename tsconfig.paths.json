@@ -10,7 +10,7 @@
       "@lib/*": ["lib/*"],
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"],
-      "@types/*": ["types/*"],
+      "@typesCustom/*": ["types/*"],
       "@utils/*": ["utils/*"],
       "@workers/*": ["workers/*"]
     }

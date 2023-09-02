@@ -2,8 +2,6 @@ import React from "react";
 
 import Countdown from "@components/Countdown";
 
-import { IReading } from "@api/api";
-
 import { padDate } from "@utils/formatDate";
 
 // round the number to certain number of decimal places
