@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { subMonths } from "date-fns";
 import { Storage } from "@api/storage";
-import { fetchReadingsRange, fetchMonth } from "@api/api";
+import { ReadingsAPI } from "@api/api";
 import { largestTriangleThreeBuckets } from "@utils/lttb";
 
 const BUTTON_TIMES = {
@@ -73,7 +73,7 @@ export default function HistoryControls(props: IProps) {
    * Display readings from given time untill now
    */
   async function selectRange(startTime: number) {
-    const readings = await fetchReadingsRange(new Date(Date.now() - startTime));
+    const readings = await ReadingsAPI.fetchRange(new Date(Date.now() - startTime));
 
     props.setReadingsHistory(readings);
 
@@ -89,7 +89,7 @@ export default function HistoryControls(props: IProps) {
 
     const [year, month] = e.currentTarget.value.split("-");
 
-    const readings = await fetchMonth(year, month);
+    const readings = await ReadingsAPI.fetchMonth(year, month);
 
     // lttb downsampling requires arrays of x and y value
     const temperatureInputs = readings.map((reading) => {

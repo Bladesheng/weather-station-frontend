@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { fetchForecast } from "@api/api";
+import { ForecastAPI } from "@api/api";
 
 import ChartForecast from "@components/charts/ChartForecast";
 
@@ -13,7 +13,7 @@ export default function HistoryTab() {
   // fetch forecast data after loading
   useEffect(() => {
     (async () => {
-      const { forecast, sunrise } = await fetchForecast();
+      const { forecast, sunrise } = await ForecastAPI.fetchForecast();
       setForecast(forecast);
       setSunrise(sunrise);
     })();
