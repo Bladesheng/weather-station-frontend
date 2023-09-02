@@ -1,179 +1,143 @@
 import { Storage } from "@api/storage";
 
-export type IReading = {
-  id: number;
-  createdAt: Date;
+const API_URL = "https://weather-station-backend.fly.dev";
 
-  temperature_BMP: number;
-  temperature_DHT: number;
-  pressure_BMP: number;
-  humidity_DHT: number;
-};
+export class ReadingsAPI {
+  public static async fetchRange(
+    start = new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // from 24 hours ago (miliseconds)
+    end = new Date() // up until now
+  ) {
+    // DEVEL
+    //start = new Date("2022-11-27T12:30");
+    //end = new Date("2022-11-28T12:30");
+    //const API_URL = "localhost:8080";
 
-export type IForecast = {
-  data: {
-    instant: {
-      details: {
-        air_pressure_at_sea_level: number;
-        air_temperature: number;
-        cloud_area_fraction: number;
-        relative_humidity: number;
-        wind_from_direction: number;
-        wind_speed: number;
-      };
-    };
-    next_1_hours: {
-      details: {
-        precipitation_amount: number;
-      };
-      summary: {
-        symbol_code: string;
-      };
-    };
-    next_6_hours: {
-      details: {
-        precipitation_amount: number;
-      };
-      summary: {
-        symbol_code: string;
-      };
-    };
-  };
+    const url = `${API_URL}/api/readings/range?start=${start.toISOString()}&end=${end.toISOString()}`;
 
-  time: Date;
-};
+    let readings: IReading[] = [];
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+      });
 
-export type ISunrise = {
-  date: Date;
-  sunrise: {
-    desc: string;
-    time: Date;
-  };
-  sunset: {
-    desc: string;
-    time: Date;
-  };
+      if (!res.ok) {
+        throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+      }
 
-  high_moon: object;
-  low_moon: object;
-  moonphase: object;
-  moonposition: object;
-  moonrise: object;
-  moonset: object;
-  moonshadow: object;
-  solarmidnight: object;
-  solarnoon: object;
-};
+      readings = await res.json();
+    } catch (error) {
+      // fetch throws errors for network errors (e.g., not connected to the internet)
+      console.warn("There has been a network error with fetch request: ", error);
 
-export async function fetchReadingsRange(
-  start = new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // from 24 hours ago (miliseconds)
-  end = new Date() // up until now
-) {
-  // DEVEL
-  //start = new Date("2022-11-27T12:30");
-  //end = new Date("2022-11-28T12:30");
-  //const domain = "localhost:8080";
-
-  const domain = "weather-station-backend.fly.dev";
-  const url = `https://${domain}/api/readings/range?start=${start.toISOString()}&end=${end.toISOString()}`;
-
-  let readings: IReading[] = [];
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-    });
-
-    if (!res.ok) {
-      throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+      readings = Storage.readings; // this will either return cached readings or empty array if nothing was cached
     }
 
-    readings = await res.json();
-  } catch (error) {
-    // fetch throws errors for network errors (e.g., not connected to the internet)
-    console.warn("There has been a network error with fetch request: ", error);
+    // convert date strings to date objects
+    for (const reading of readings) {
+      reading.createdAt = new Date(reading.createdAt);
+    }
 
-    readings = Storage.readings; // this will either return cached readings or empty array if nothing was cached
+    console.log("Readings: ", readings);
+    return readings;
   }
 
-  // convert date strings to date objects
-  for (const reading of readings) {
-    reading.createdAt = new Date(reading.createdAt);
+  public static async fetchLast24h() {
+    const url = `${API_URL}/api/readings/24h`;
+
+    let readings: IReading[] = [];
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+      });
+
+      if (!res.ok) {
+        throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+      }
+
+      readings = await res.json();
+    } catch (error) {
+      // fetch throws errors for network errors (e.g., not connected to the internet)
+      console.warn("There has been a network error with fetch request: ", error);
+
+      readings = Storage.readings; // this will either return cached readings or empty array if nothing was cached
+    }
+
+    // convert date strings to date objects
+    for (const reading of readings) {
+      reading.createdAt = new Date(reading.createdAt);
+    }
+
+    console.log("Readings: ", readings);
+    return readings;
   }
 
-  console.log("Readings: ", readings);
-  return readings;
+  public static async fetchMonth(year: number | string, month: number | string) {
+    const url = `${API_URL}/api/readings/month?year=${year}&month=${month}`;
+
+    let readings: IReading[] = [];
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+      });
+
+      if (!res.ok) {
+        throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+      }
+
+      readings = await res.json();
+    } catch (error) {
+      console.warn("There has been a network error with fetch request: ", error);
+    }
+
+    // convert date strings to date objects
+    for (const reading of readings) {
+      reading.createdAt = new Date(reading.createdAt);
+    }
+
+    console.log("Readings: ", readings);
+    return readings;
+  }
 }
 
-export async function fetchLast24h() {
-  const domain = "weather-station-backend.fly.dev";
-  const url = `https://${domain}/api/readings/24h`;
+export class ForecastAPI {
+  public static async fetchForecast() {
+    const url = `${API_URL}/api/forecast`;
 
-  let readings: IReading[] = [];
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-    });
+    let forecast: IForecast[] = [];
+    let sunrise: ISunrise[] = [];
 
-    if (!res.ok) {
-      throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+      });
+
+      if (!res.ok) {
+        throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      forecast = data.forecast;
+      sunrise = data.sunrise;
+    } catch (error) {
+      // fetch throws errors for network errors (e.g., not connected to the internet)
+      console.warn("There has been a network error with fetch request: ", error);
     }
 
-    readings = await res.json();
-  } catch (error) {
-    // fetch throws errors for network errors (e.g., not connected to the internet)
-    console.warn("There has been a network error with fetch request: ", error);
+    // delete the last day because it is sometimes missing some properties
+    sunrise.pop();
 
-    readings = Storage.readings; // this will either return cached readings or empty array if nothing was cached
-  }
-
-  // convert date strings to date objects
-  for (const reading of readings) {
-    reading.createdAt = new Date(reading.createdAt);
-  }
-
-  console.log("Readings: ", readings);
-  return readings;
-}
-
-export async function fetchForecast() {
-  const domain = "weather-station-backend.fly.dev";
-  //const domain = "localhost:8080";
-  const url = `https://${domain}/api/forecast`;
-
-  let forecast: IForecast[] = [];
-  let sunrise: ISunrise[] = [];
-
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-    });
-
-    if (!res.ok) {
-      throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
+    // convert date strings to date objects
+    for (const timePoint of forecast) {
+      timePoint.time = new Date(timePoint.time);
+    }
+    for (const day of sunrise) {
+      day.date = new Date(day.date);
+      day.sunrise.time = new Date(day.sunrise.time);
+      day.sunset.time = new Date(day.sunset.time);
     }
 
-    const data = await res.json();
-    forecast = data.forecast;
-    sunrise = data.sunrise;
-  } catch (error) {
-    // fetch throws errors for network errors (e.g., not connected to the internet)
-    console.warn("There has been a network error with fetch request: ", error);
+    console.log("Forecast: ", forecast);
+    console.log("Sunrise: ", sunrise);
+    return { forecast, sunrise };
   }
-
-  // delete the last day because it is sometimes missing some properties
-  sunrise.pop();
-
-  // convert date strings to date objects
-  for (const timePoint of forecast) {
-    timePoint.time = new Date(timePoint.time);
-  }
-  for (const day of sunrise) {
-    day.date = new Date(day.date);
-    day.sunrise.time = new Date(day.sunrise.time);
-    day.sunset.time = new Date(day.sunset.time);
-  }
-
-  console.log("Forecast: ", forecast);
-  console.log("Sunrise: ", sunrise);
-  return { forecast, sunrise };
 }

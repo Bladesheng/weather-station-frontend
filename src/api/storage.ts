@@ -1,5 +1,3 @@
-import { IReading } from "@api/api";
-
 // Module for interfacing with Local Storage API
 export const Storage = (() => {
   type IdatasetHidden = {
@@ -41,15 +39,15 @@ export const Storage = (() => {
       }
     },
 
-    set lastRange(newData: string) {
+    set lastRange(newData: number) {
       localStorage.setItem("lastRange", JSON.stringify(newData));
     },
     get lastRange() {
       const raw = localStorage.getItem("lastRange");
       if (raw === null) {
-        return "";
+        return 0;
       } else {
-        return JSON.parse(raw) as string;
+        return JSON.parse(raw) as number;
       }
     },
   };

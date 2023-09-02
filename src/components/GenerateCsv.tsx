@@ -1,7 +1,5 @@
 import React from "react";
 
-import { IReading } from "@api/api";
-
 type IProps = {
   readingsHistory: IReading[];
 };

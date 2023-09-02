@@ -4,8 +4,6 @@ import HistoryControls from "@components/HistoryControls";
 import ChartInteractive from "@components/charts/ChartInteractive";
 import GenerateCsv from "@components/GenerateCsv";
 
-import { IReading } from "@api/api";
-
 type IProps = {
   readingsHistory: IReading[];
   setReadingsHistory: (readings: IReading[]) => void;

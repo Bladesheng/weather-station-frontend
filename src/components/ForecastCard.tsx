@@ -1,6 +1,5 @@
 import React from "react";
 
-import { IForecast, ISunrise } from "@api/api";
 import { padWithZeroes, padDate } from "@utils/formatDate";
 
 const dayNames = ["Neděle", "Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota"];
