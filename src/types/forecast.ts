@@ -32,23 +32,6 @@ export type Forecast = {
 };
 
 export type Sunrise = {
-  date: Date;
-  sunrise: {
-    desc: string;
-    time: Date;
-  };
-  sunset: {
-    desc: string;
-    time: Date;
-  };
-
-  high_moon: object;
-  low_moon: object;
-  moonphase: object;
-  moonposition: object;
-  moonrise: object;
-  moonset: object;
-  moonshadow: object;
-  solarmidnight: object;
-  solarnoon: object;
+  sunrise: Date;
+  sunset: Date;
 };
