@@ -101,43 +101,32 @@ export class ReadingsAPI {
 
 export class ForecastAPI {
   public static async fetchForecast() {
-    const url = `${API_URL}/api/forecast`;
-
-    let forecast: IForecast[] = [];
-    let sunrise: ISunrise[] = [];
-
     try {
-      const res = await fetch(url, {
-        method: "GET",
-      });
+      const url = `${API_URL}/api/forecast`;
+
+      const res = await fetch(url);
 
       if (!res.ok) {
         throw new Error(`Network response was not OK: ${res.status} ${res.statusText}`);
       }
 
       const data = await res.json();
-      forecast = data.forecast;
-      sunrise = data.sunrise;
+      const forecast: IForecast[] = data.forecast;
+      const sunriseSunset: ISunrise = data.sunrise;
+
+      // convert date strings to date objects
+      for (const timePoint of forecast) {
+        timePoint.time = new Date(timePoint.time);
+      }
+      sunriseSunset.sunrise = new Date(sunriseSunset.sunrise);
+      sunriseSunset.sunset = new Date(sunriseSunset.sunset);
+
+      console.log("Forecast: ", forecast);
+      console.log("Sunrise: ", sunriseSunset);
+      return { forecast, sunriseSunset };
     } catch (error) {
       // fetch throws errors for network errors (e.g., not connected to the internet)
       console.warn("There has been a network error with fetch request: ", error);
     }
-
-    // delete the last day because it is sometimes missing some properties
-    sunrise.pop();
-
-    // convert date strings to date objects
-    for (const timePoint of forecast) {
-      timePoint.time = new Date(timePoint.time);
-    }
-    for (const day of sunrise) {
-      day.date = new Date(day.date);
-      day.sunrise.time = new Date(day.sunrise.time);
-      day.sunset.time = new Date(day.sunset.time);
-    }
-
-    console.log("Forecast: ", forecast);
-    console.log("Sunrise: ", sunrise);
-    return { forecast, sunrise };
   }
 }

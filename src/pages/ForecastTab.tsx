@@ -7,15 +7,19 @@ import ChartForecast from "@components/charts/ChartForecast";
 import ForecastTable from "@components/ForecastTable";
 
 export default function HistoryTab() {
-  const [forecast, setForecast] = useState<IForecast[]>([]);
-  const [sunrise, setSunrise] = useState<ISunrise[]>([]);
+  const [forecast, setForecast] = useState<IForecast[]>();
+  const [sunrise, setSunrise] = useState<ISunrise>();
 
   // fetch forecast data after loading
   useEffect(() => {
     (async () => {
-      const { forecast, sunrise } = await ForecastAPI.fetchForecast();
-      setForecast(forecast);
-      setSunrise(sunrise);
+      const res = await ForecastAPI.fetchForecast();
+      if (res !== undefined) {
+        const { forecast, sunriseSunset } = res;
+
+        setForecast(forecast);
+        setSunrise(sunriseSunset);
+      }
     })();
   }, []);
 

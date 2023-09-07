@@ -3,8 +3,8 @@ import React from "react";
 import ForecastCard from "./ForecastCard";
 
 type IProps = {
-  forecast: IForecast[];
-  sunrise: ISunrise[];
+  forecast: IForecast[] | undefined;
+  sunrise: ISunrise | undefined;
 };
 
 // split forecast into subarrays of timepoints grouped by days
@@ -26,7 +26,7 @@ function splitByDays(forecast: IForecast[]) {
 }
 
 export default function ForecastTable(props: IProps) {
-  if (props.forecast.length === 0) {
+  if (props.forecast === undefined || props.sunrise === undefined) {
     return <p>Načítání...</p>;
   }
 

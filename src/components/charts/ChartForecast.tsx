@@ -45,11 +45,11 @@ ChartJS.register(
 );
 
 type IProps = {
-  forecast: IForecast[];
+  forecast: IForecast[] | undefined;
 };
 
 export default function ChartForecast(props: IProps) {
-  const forecast = props.forecast;
+  const forecast = props.forecast ?? [];
 
   const forecast_temperatures = forecast.map((forecastTimePoint) => {
     return {

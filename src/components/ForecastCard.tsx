@@ -6,7 +6,7 @@ const dayNames = ["Neděle", "Pondělí", "Úterý", "Středa", "Čtvrtek", "Pá
 
 type IProps = {
   day: IForecast[];
-  sunrise?: ISunrise[];
+  sunrise?: ISunrise;
 };
 
 export default function ForecastCard(props: IProps) {
@@ -67,11 +67,11 @@ export default function ForecastCard(props: IProps) {
   let sunset = "";
   if (props.sunrise !== undefined) {
     {
-      const { hours, minutes } = padDate(props.sunrise[0].sunrise.time);
+      const { hours, minutes } = padDate(props.sunrise.sunrise);
       sunrise = `${hours}:${minutes}`;
     }
     {
-      const { hours, minutes } = padDate(props.sunrise[0].sunset.time);
+      const { hours, minutes } = padDate(props.sunrise.sunset);
       sunset = `${hours}:${minutes}`;
     }
   }
