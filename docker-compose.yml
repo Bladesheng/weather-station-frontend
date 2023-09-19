@@ -9,4 +9,4 @@ services:
     ports:
       - 8000:8000
     tty: true # to enable colored output
-    command: npm run dev
+    command: pnpm run dev
