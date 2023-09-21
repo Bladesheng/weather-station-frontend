@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import { useRegisterSW } from "virtual:pwa-register/react";
 
 import Navbar from "@components/Navbar";
 
@@ -16,6 +17,14 @@ import { ReadingsAPI } from "@api/api";
 const initialReadings = await ReadingsAPI.fetchLast24h();
 
 export default function App() {
+  useRegisterSW({
+    immediate: true,
+
+    onOfflineReady() {
+      console.log("[SW] Offline version is ready");
+    },
+  });
+
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [readings, setReadings] = useState<IReading[]>(initialReadings);
   const [readingsHistory, setReadingsHistory] = useState<IReading[]>([]); // save the state here so it doesn't get deleted when switching tabs
