@@ -1,23 +1,18 @@
-// For explanation of the algorithm see: https://skemman.is/bitstream/1946/15343/3/SS_MSthesis.pdf
-// This is simply a more readable, ES6 and typescript ready version of the original JS implementation of LTTB.
-// https://github.com/sveinn-steinarsson/flot-downsample
-
-// some variables can be either number or date
-function alwaysNumber(originalVar: number | Date) {
-  if (typeof originalVar === "object") {
-    return originalVar.getTime();
-  } else {
-    return originalVar;
-  }
-}
-
-export function largestTriangleThreeBuckets(data: (number | Date)[][], threshold: number) {
+/**
+ * Largest Triangle Three Buckets
+ * For explanation of the algorithm see: https://skemman.is/bitstream/1946/15343/3/SS_MSthesis.pdf
+ * This is more readable, ES6 and typescript friendly version of the original JS implementation of LTTB.
+ * (https://github.com/sveinn-steinarsson/flot-downsample)
+ * @param data Array of arrays with x and y values such as: [[2, 3], [5, 7], [4, 6]]
+ * @param threshold maximum length of the returned array (if input array is shorter, it will be simply returned without any decimation)
+ */
+export function lttb(data: [number, number][], threshold: number) {
   const data_length = data.length;
   if (threshold >= data_length || threshold === 0) {
     return data; // nothing to do
   }
 
-  const downsampledData = [];
+  const downsampledData: typeof data = [];
 
   // size of each bucket - leave room for start and end data points
   const bucketSize = (data_length - 2) / (threshold - 2);
@@ -32,8 +27,8 @@ export function largestTriangleThreeBuckets(data: (number | Date)[][], threshold
 
   for (let currentData_index = 0; currentData_index < threshold - 2; currentData_index++) {
     // Previous bucket:
-    const point_a_x = alwaysNumber(data[point_a][0]);
-    const point_a_y = alwaysNumber(data[point_a][1]);
+    const point_a_x = data[point_a][0];
+    const point_a_y = data[point_a][1];
 
     // Current bucket:
     const currentBucket_start = Math.floor((currentData_index + 0) * bucketSize) + 1;
@@ -53,8 +48,8 @@ export function largestTriangleThreeBuckets(data: (number | Date)[][], threshold
     // Point C is located at the average x and y values.
     const { point_c_x, point_c_y } = nextBucket.reduce(
       (averages, currentData) => {
-        const currentValue_x = alwaysNumber(currentData[0]);
-        const currentValue_y = alwaysNumber(currentData[1]);
+        const currentValue_x = currentData[0];
+        const currentValue_y = currentData[1];
 
         return {
           point_c_x: averages.point_c_x + currentValue_x / nextBucket.length,
@@ -72,8 +67,8 @@ export function largestTriangleThreeBuckets(data: (number | Date)[][], threshold
     // That point (B) will later become point A
     const { point_b_data, next_a } = currentBucket.reduce(
       (returnValues, currentData, currentBucket_data_index) => {
-        const point_b_x = alwaysNumber(currentData[0]);
-        const point_b_y = alwaysNumber(currentData[1]);
+        const point_b_x = currentData[0];
+        const point_b_y = currentData[1];
 
         // area of the current triangle (created by connecting points A, B and C)
         const area =

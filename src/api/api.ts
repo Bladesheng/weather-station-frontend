@@ -72,7 +72,7 @@ export class ReadingsAPI {
   }
 
   public static async fetchMonth(year: number | string, month: number | string) {
-    const url = `${API_URL}/api/readings/month?year=${year}&month=${month}`;
+    const url = `${API_URL}/api/readings/month/decimated?year=${year}&month=${month}`;
 
     let readings: IReading[] = [];
     try {

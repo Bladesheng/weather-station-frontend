@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { subMonths } from "date-fns";
 import { Storage } from "@api/storage";
 import { ReadingsAPI } from "@api/api";
-import { largestTriangleThreeBuckets } from "@utils/lttb";
 
 const BUTTON_TIMES = {
   "12 hodin": 12 * 60 * 60 * 1000,
@@ -91,47 +90,7 @@ export default function HistoryControls(props: IProps) {
 
     const readings = await ReadingsAPI.fetchMonth(year, month);
 
-    // lttb downsampling requires arrays of x and y value
-    const temperatureInputs = readings.map((reading) => {
-      return [reading.createdAt, reading.temperature_BMP];
-    });
-    const humidityInputs = readings.map((reading) => {
-      return [reading.createdAt, reading.humidity_DHT];
-    });
-    const pressureInputs = readings.map((reading) => {
-      return [reading.createdAt, reading.pressure_BMP];
-    });
-
-    // Downsampling - usually, there is arround 8000 readings per month.
-    // With that many points, the browser usually starts to lag
-    const downsampledCount = 1000; // 1000 seems to be ok compromise between browser lag and data resolution
-    const temperatureTrimmed = largestTriangleThreeBuckets(temperatureInputs, downsampledCount);
-    const humidityTrimmed = largestTriangleThreeBuckets(humidityInputs, downsampledCount);
-    const pressureTrimmed = largestTriangleThreeBuckets(pressureInputs, downsampledCount);
-
-    const newReadings: IReading[] = temperatureTrimmed.map((temperatureReading, i) => {
-      const humidityReading = humidityTrimmed[i];
-      const pressureReading = pressureTrimmed[i];
-
-      return {
-        // Unfortunately, due to how lttb works, you can downsample only 1 X and Y value at a time.
-        // Lttb will select points from different dates (X value) from each dataset.
-        // If you save the results into the same time point (X), some values will then be slightly shifted.
-        // The alternative is to use different X axis for each dataset. But then the chart tooltip won't work properly...
-        createdAt: temperatureReading[0] as Date,
-        temperature_BMP: temperatureReading[1] as number,
-        temperature_DHT: temperatureReading[1] as number,
-        humidity_DHT: humidityReading[1] as number,
-        pressure_BMP: pressureReading[1] as number,
-
-        // gotta make something up, so that typescript is happy
-        id: 1,
-      };
-    });
-
-    console.log("Trimmed: ", newReadings);
-
-    props.setReadingsHistory(newReadings);
+    props.setReadingsHistory(readings);
   }
 
   // create button for each range entry in BUTTON_TIMES
